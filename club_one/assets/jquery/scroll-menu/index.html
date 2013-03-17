@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBliC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>原创作品-jquery.ScrollNav精美滑动菜单导航条</title>
+<meta name="Keywords" content="jquery.ScrollNav,jquery滑动导航条,Jquery滑动菜单,似懂非懂" />
+<meta name="Description" content="一款基于jquery的精美插件，功能简单实用，可完全免费用于个人博客，企业网站，门户网站等。" />
+<style>
+body{ padding:0px; margin:0px; font-family:'Microsoft YaHei'; color: #333;}
+.logo{position: relative; margin-left: 100px;}
+.logo h1{position: relative;font-size:60px;font-family: Helvetica, Arial, sans-serif;text-shadow: 0px 1px 0px white;}
+.download { margin-left:100px;}
+.download a.button {display: inline-block;background: #56ba4a;border: 3px solid #59a24f;color: #fff;border-radius: 5px;font-family: 'Amaranth', sans-serif;font-size: 24px;padding: 10px 30px;text-decoration: none;text-shadow: 1px 1px 1px #59a24f;box-shadow: 2px 2px 4px rgba(0,0,0,0.2);margin: 10px 20px 0 0; -webkit-transition: all 0.25s ease;}
+.download a.button:hover {background: #2f8325;box-shadow: none;}
+.textDes{ margin-left:100px;text-shadow: 0px 1px 0px white;}
+.textDes h3{font-size: 28px; margin:30px 0 0 0 ;}
+.textDes p{ display:inline-block; width:auto; padding:15px; margin-left:40px; color:#fff;background-color: #333;	-moz-border-radius: 8px;-webkit-border-radius: 8px;-o-border-radius: 8px;-ms-border-radius: 8px;-khtml-border-radius: 8px;border-radius: 8px;text-shadow: 1px 0px 0px #000;}
+.textDes ul{ font-size:16px; padding-left:40px;}
+.textDes ul li{list-style-type: disc; height:30px; line-height:30px;}
+
+</style>
+<link rel="stylesheet" type="text/css" href="css/scrollNav.css"/>
+<script type="text/javascript" src="scripts/jquery-1-7-2.js"></script>
+<script type="text/javascript" src="scripts/navScroll.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".nav > ul > li").ScrollNav({
+		scrollObj:".nav > .scrollObj", //滑动的对象
+		speed:"fast" //速度
+	});
+	
+	$(".nav02 > ul > li").ScrollNav({
+		scrollObj:".nav02 > .scrollObj02", //滑动的对象
+		speed:"fast" //速度
+	});
+});
+</script>
+</head>
+
+<body style="background:url(images/bg.png)">
+
+<div class="logo">
+  <h1>Jquery.ScrollNav 1.0</h1>
+</div>
+<div class="download">
+  <a href="http://www.haw86.com/down/Jquery.ScrollNav/1.0/Jquery.ScrollMenu.zip" class="button">下载此插件.zip</a>
+  <a href="http://www.haw86.com" class="button">返回博客首页</a>
+</div>
+
+<br /><br /><br />
+<div class="textDes">
+    <h3>效果演示：</h3>
+</div>
+<br />
+
+<div class="nav">
+	<ul class="ulBox">
+    	<li class="current"><a href="http://www.haw86.com">导航条一</a></li>
+    	<li><a href="http://www.haw86.com">导航条二</a>
+        	<ul>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            </ul>
+        </li>
+    	<li><a href="http://www.haw86.com">导航条三</a></li>
+    	<li style="width:168px"><a href="http://www.haw86.com">导航条四</a>
+        	<ul>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            </ul>
+        </li>
+    	<li><a href="http://www.haw86.com">导航条五</a></li>
+    	<li><a href="http://www.haw86.com">导航条六</a></li>
+    	<li><a href="http://www.haw86.com">导航条七</a></li>
+    	<li><a href="http://www.haw86.com">导航条八</a></li>
+    </ul>
+    <div class="scrollObj"></div>
+</div>
+<br /><br /><br /><br />
+<div class="gridNav">
+	
+<div class="nav02">
+	<ul class="ulBox02">
+    	<li class="current"><a href="http://www.haw86.com">导航条一</a></li>
+    	<li><a href="http://www.haw86.com">导航条二</a>
+        	<ul>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            </ul>
+        </li>
+    	<li><a href="http://www.haw86.com">导航条三</a></li>
+    	<li><a href="http://www.haw86.com">导航条四</a>
+        	<ul>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            </ul>
+        </li>
+    	<li style="width:168px"><a href="http://www.haw86.com">导航条五</a>
+        	<ul>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            	<li><a href="http://www.haw86.com">二级导航</a></li>
+            </ul>
+        </li>
+    	<li><a href="http://www.haw86.com">导航条六</a></li>
+    	<li><a href="http://www.haw86.com">导航条七</a></li>
+    	<li><a href="http://www.haw86.com">导航条八</a></li>
+    </ul>
+    <div class="scrollObj02"></div>
+</div>
+</div>
+
+
+<div class="textDes">
+    <h3>特性</h3>
+    <ul>
+    	<li>兼容IE6-9，谷歌，火狐和苹果等浏览器；</li>
+    	<li>代码简洁，执行效率相对较高；</li>
+    	<li>完全免费使用，当然仅限法律安全范围内^_^；</li>
+    </ul>
+</div>
+
+<div class="textDes">
+    <h3>插件调用方法</h3>
+    <p>
+     $(&quot;.nav &gt; ul &gt; li&quot;).ScrollNav({<br>
+    &nbsp; &nbsp; scrollObj:&quot;.nav &gt; .scrollObj&quot;, //滑动的对象<br>
+    &nbsp; &nbsp; speed:&quot;fast&quot; //速度<br>
+    });<br>
+    </p>
+</div>
+
+<div class="textDes">
+    <h3>Dom 结构</h3>
+    <p>
+&lt;div class=&quot;nav&quot;&gt;<br>
+&nbsp; &nbsp; &lt;ul class=&quot;ulBox&quot;&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &lt;li class=&quot;current&quot;&gt;&lt;a href=&quot;&quot;&gt;导航条一&lt;/a&gt;&lt;/li&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;ul&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;a href=&quot;&quot;&gt;导航条二&lt;/a&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;a href=&quot;&quot;&gt;二级导航&lt;/a&gt;&lt;/li&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;a href=&quot;&quot;&gt;二级导航&lt;/a&gt;&lt;/li&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/ul&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/li&gt;<br>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;li&gt;&lt;a href=&quot;&quot;&gt;导航条二&lt;/a&gt;&lt;/li&gt;<br>
+&nbsp; &nbsp; &lt;/ul&gt;<br>
+&nbsp; &nbsp; &lt;div class=&quot;scrollObj&quot;&gt;&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+    </p>
+</div>
+
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+<br /><br /><br /><br />
+
+
+</body>
+</html>
