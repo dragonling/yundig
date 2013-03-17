@@ -1,1 +1,0 @@
-this is <?php echo Kohana::$config->load('site')->get('theme') ?> home
