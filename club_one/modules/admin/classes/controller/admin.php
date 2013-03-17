@@ -709,7 +709,7 @@ class Controller_Admin extends Controller
 	 */
 	public static function handle($id, $row = NULL)
 	{
-		$request = new Request($_SERVER['PATH_INFO']);
+		$request = new Request($_SERVER['REQUEST_URI']);
 		
 		$param = '~/';
 		if ($request->param('param') != '') $param = $request->param('param').'/'; 
