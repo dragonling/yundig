@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jquery.returnTop返回顶部Jquery插件（似懂非懂原创）</title>
+<link rel="stylesheet" type="text/css" href="css/returnStyle.css"/>
+<script type="text/javascript" src="js/jquery-1-7-2.js"></script>
+<script type="text/javascript" src="js/returnTop.js"></script>
+<script type="text/javascript">
+$(function(){
+	//调用返回顶部
+	$("#returnTop").returnTop({right:40,bottom:30});
+})	
+</script>
+</head>
+
+<body>
+  
+<!--returnTop Start-->
+	<div id="returnTop">
+    	<img src="images/returnTop.gif" alt="放回顶部" title="返回顶部" />
+    </div>
+<!--returnTop End-->
+
+
+
+<div style="height:1000px; width:700px; margin:0px auto; padding:30px; background:#eee; border:1px solid #ddd;">
+
+	<div class="miapShuListBox">
+		<h3>jquery.returnTop返回顶部Jquery插件</h3>
+		<p>
+		作者：似懂非懂<br>
+		Blog：<a href="http://www.haw86.com" target="_blank">http://www.haw86.com</a>
+		</p>
+	</div>
+	
+	<div class="miapShuListBox">
+		<h3>调用方法</h3>
+		<p>
+			&lt;script type=&quot;text/javascript&quot;&gt;<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;$(function(){<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;//调用返回顶部<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;$(&quot;#returnTop&quot;).returnTop({right:40,bottom:30});<br />
+			}) <br />
+			&lt;/script&gt;<br />
+		</p>
+	</div>
+	
+	<div class="miapShuListBox">
+		<h3>Dom 结构</h3>
+		<p>
+			  &lt;div id=&quot;returnTop&quot;&gt;<br />
+			  &nbsp;&nbsp;&nbsp;&nbsp;&lt;img src=&quot;images/returnTop.gif&quot; alt=&quot;放回顶部&quot; title=&quot;返回顶部&quot; /&gt;<br />
+			  &lt;/div&gt;<br />
+		</p>
+	</div>
+	
+	<div class="miapShuListBox">
+		<h3>Style 样式</h3>
+		<p>
+			.returnBox{ width:1000px; height:0px; margin: 0 auto; z-index:1000;}<br />
+			#returnTop{ width:20px; height:55px; position:fixed; bottom:30px; margin-left:1020px; background:#ddd; cursor:pointer;}<br />
+		</p>
+	</div>
+	
+	
+</div>
+
+</body>
+</html>
