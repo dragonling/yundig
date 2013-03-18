@@ -45,7 +45,7 @@ $(document).ready(function(){
 				<col width="150px" />
 				<col />
 				<?php foreach ($group_columns as $group_name => $group) :?>
-				<tbody class="tab_content" id="<?php echo $group_name; ?>">
+				<tbody class="tab_content " id="<?php echo $group_name; ?>" style="<?php echo isset($first_group) ? 'display:none' : $first_group = 1; ?>">
 					<?php foreach($group as $k => $v):?>
 				
 					<tr class="_<?php echo $k ?>">

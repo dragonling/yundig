@@ -68,7 +68,7 @@ class Controller_System_Catalog extends Controller_Admin {
 	function action_add()
 	{
 		$this->init();
-		
+		$this->article_cloumn_options();
 		$this->template = View::factory('system/catalog_add');	
 		
 		//读取列信息 
@@ -79,6 +79,7 @@ class Controller_System_Catalog extends Controller_Admin {
 		
 		$base_column = array('parent_id', 'title', 'thumb', 'image', 'link', 'target', 'desc', 'template', 'sort_order', 'status');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
+		$auth_article_column  = array('article_columns');
 		$my_columns  = array();
 		//系统设置 一般tag
 		foreach (I18n::get('data_catalog_types', 'catalog') as $k => $v)
@@ -87,7 +88,7 @@ class Controller_System_Catalog extends Controller_Admin {
 					'id'       => '',
 					'name'     => $k . '_column',  //根据name 选中显示内容
 					'title'    => $v,
-					'selected' => 'core' == $k ? 'selected' : '',
+					'selected' => 'base' == $k ? 'selected' : '',
 			);
 			$colum = $k . '_column';
 			foreach ($$colum as $col)
@@ -137,6 +138,8 @@ class Controller_System_Catalog extends Controller_Admin {
 		
 		$base_column = array('id', 'parent_id', 'title', 'thumb', 'image', 'link', 'target', 'desc', 'template', 'sort_order', 'status');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
+		$auth_article_column  = array('article_columns');
+		
 		$my_columns  = array();
 		//系统设置 一般tag
 		foreach (I18n::get('data_catalog_types', 'catalog') as $k => $v)
@@ -145,7 +148,7 @@ class Controller_System_Catalog extends Controller_Admin {
 					'id'       => '',
 					'name'     => $k . '_column',  //根据name 选中显示内容
 					'title'    => $v,
-					'selected' => 'core' == $k ? 'selected' : '',
+					'selected' => 'base' == $k ? 'selected' : '',
 			);
 			$colum = $k . '_column';
 			foreach ($$colum as $col)
@@ -181,6 +184,7 @@ class Controller_System_Catalog extends Controller_Admin {
 		$data['image']['field']       = View::factory('widget/upload', array('field'=>'image', 'value'=>'', 'path' => '/assets/uploads'));
 		$data['desc']['field']        = Form::textarea('desc', '');
 		$data['status']['field']      = Form::select('status', I18n::get('data_status', 'common'), 1);
+		$data['article_columns']['field']      = Form::checkboxes('article_columns[]', $this->article_cloumn_options(), '', NULL, "<br />\n");
 		
 		$data['link']['validate']['rules'] = '{required: false}';
 		$data['thumb']['validate']['rules'] = '{required: false}';
@@ -212,6 +216,7 @@ class Controller_System_Catalog extends Controller_Admin {
 		$data['image']['field']       = View::factory('widget/upload', array('field'=>'image', 'value'=>$orm->image, 'path' => '/assets/uploads'));
 		$data['desc']['field']        = Form::textarea('desc', $orm->desc);
 		$data['status']['field']      = Form::select('status', I18n::get('data_status', 'common'), $orm->status);
+		$data['article_columns']['field']      = Form::checkboxes('article_columns[]', $this->article_cloumn_options(), explode(',', $orm->article_columns), NULL, "<br />\n");
 		return $data;
 	}
 	
@@ -268,6 +273,19 @@ class Controller_System_Catalog extends Controller_Admin {
 		$html .= "</a> ";
 		
 		return $html;
+	}
+	
+	function article_cloumn_options()
+	{
+		$columns = ORM::factory('article')->list_columns();
+		$options = array();
+		foreach ($columns as $v)
+		{
+			$options[$v['column_name']] = $v['comment'];
+		}
+		$options['contents'] = i18n::get('contents', 'catalog');
+		unset($options['id']);
+		return $options;
 	}
 }
 ?>

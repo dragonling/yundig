@@ -257,6 +257,8 @@ class Controller_Cms_Main extends Controller_Admin {
 	 */
 	function action_add()
 	{
+		$param = $this->request->param('param');
+		
 		$this->init();
 		
 		$this->template = View::factory('cms/add');	
@@ -268,6 +270,11 @@ class Controller_Cms_Main extends Controller_Admin {
 		$this->template->pk = $this->pk;
 		$this->template->contents = array((object)array('id' => 0, 'title' => 'New', 'content' => ''));
 		unset($this->tabs['language']);
+		
+		if (is_numeric($param))
+		{
+			$catalog = ORM::factory('catalog', $param)->as_array('id', 'article_columns');
+		}
 		
 		$base_column = array('category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status', 'template');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
