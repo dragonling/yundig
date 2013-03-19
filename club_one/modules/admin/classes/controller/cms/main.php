@@ -260,23 +260,23 @@ class Controller_Cms_Main extends Controller_Admin {
 		$param = $this->request->param('param');
 		
 		$this->init();
-		
 		$this->template = View::factory('cms/add');	
-		
 		//读取列信息 
 		$columns = $this->blank_form_columns($this->columns);
 		
 		//获取主键名称 用于编辑删除操作
 		$this->template->pk = $this->pk;
-		$this->template->contents = array((object)array('id' => 0, 'title' => 'New', 'content' => ''));
 		unset($this->tabs['language']);
 		
+		//设定显示哪些可编辑内容
+		$article_columns = array();
 		if (is_numeric($param))
 		{
 			$catalog = ORM::factory('catalog', $param)->as_array('id', 'article_columns');
+			$article_columns = explode(',', $catalog['article_columns']);
 		}
 		
-		$base_column = array('category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status', 'template');
+		$base_column = array('template', 'category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
 		$my_columns  = array();
 		//系统设置 一般tag
@@ -291,8 +291,17 @@ class Controller_Cms_Main extends Controller_Admin {
 			$colum = $k . '_column';
 			foreach ($$colum as $col)
 			{
-				$my_columns[$k . '_column'][$col] = $columns[$col];
+				//设定显示哪些可编辑内容
+				if (in_array($col, $article_columns))
+				{
+					$my_columns[$k . '_column'][$col] = $columns[$col];
+				}
 			}
+		}
+		//设定显示内容编辑器
+		if (in_array('contents', $article_columns))
+		{
+			$this->template->contents = array((object)array('id' => 0, 'title' => 'New', 'content' => ''));
 		}
 		$this->template->columns = $columns;
 		$this->template->group_columns = $my_columns;
@@ -304,6 +313,7 @@ class Controller_Cms_Main extends Controller_Admin {
 	 */
 	function action_edit()
 	{
+		$param = $this->request->param('param');
 		//初始化 model配置 
 		$this->init();
 		$this->template = View::factory('cms/add');	
@@ -321,10 +331,16 @@ class Controller_Cms_Main extends Controller_Admin {
 		//获取主键名称 用于编辑删除操作
 		$this->template->pk = $this->pk;		
 		
-		$orm_contents = ORM::factory('article_contents')->where('article_id', '=', $primary_key)->where('language_id', '=', $this->language_id)->order_by('id', 'asc')->find_all();
-		$this->template->contents = $orm_contents->as_array();
+		//设定显示哪些可编辑内容
+		$article_columns = array();
+		if (is_numeric($param))
+		{
+			$catalog = ORM::factory('catalog', $param)->as_array('id', 'article_columns');
+			$article_columns = explode(',', $catalog['article_columns']);
+		}
+		array_unshift($article_columns, 'id');
 		
-		$base_column = array('id', 'category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status', 'template');
+		$base_column = array('id', 'template', 'category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
 		$my_columns  = array();
 		//系统设置 一般tag
@@ -339,8 +355,18 @@ class Controller_Cms_Main extends Controller_Admin {
 			$colum = $k . '_column';
 			foreach ($$colum as $col)
 			{
-				$my_columns[$k . '_column'][$col] = $columns[$col];
+				//设定显示哪些可编辑内容
+				if (in_array($col, $article_columns))
+				{
+					$my_columns[$k . '_column'][$col] = $columns[$col];
+				}
 			}
+		}
+		//设定显示内容编辑器
+		if (in_array('contents', $article_columns))
+		{
+			$orm_contents = ORM::factory('article_contents')->where('article_id', '=', $primary_key)->where('language_id', '=', $this->language_id)->order_by('id', 'asc')->find_all();
+			$this->template->contents = $orm_contents->as_array();
 		}
 		$this->template->columns = $columns;
 		$this->template->group_columns = $my_columns;

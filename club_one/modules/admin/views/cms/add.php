@@ -60,6 +60,7 @@ $(document).ready(function(){
 					<?php endforeach;?>
 				</tbody>
 				<?php endforeach;?>
+				<?php if (isset($contents)) : ?>
 				<tbody>
 					<tr>
 						<th></th>
@@ -68,6 +69,7 @@ $(document).ready(function(){
 						</td>
 					</tr>
 				</tbody>
+				<?php endif; ?>
 				<tfoot>
 					<tr>
 						<th><?php echo i18n::get('text_save_return', 'admin') ?></th>
