@@ -94,7 +94,7 @@ function open_window(id, name, url)
 		var html = '<iframe id="'+frame+'" src="'+url+'" style="width:100%;height:100%;" class="loading" frameborder="0"></iframe>';
 		$('#windows').append(html);
 		
-		var html = '<span class="nav_sec selected" id="'+nav+'" alt="'+id+'"><label href="javascript:;" onclick="switch_window('+id+')">'+name+'</label><a href="javascript:;" onclick="close_window('+id+')" class="close">x</a></span>';
+		var html = '<span class="nav_sec selected" id="'+nav+'" alt="'+id+'"><label href="javascript:;" onclick="switch_window(\''+id+'\')">'+name+'</label><a href="javascript:;" onclick="close_window(\''+id+'\')" class="close">x</a></span>';
 		$('#info_bar').append(html);
 	}
 }

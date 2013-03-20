@@ -79,7 +79,7 @@ class Controller_Api_Carousel extends Controller_Admin{
 	 * 列表静态操作方法
 	 * @param primary_key $id
 	 */
-	public static function handle($id)
+	public static function handle($id, $row = NULL)
 	{
 		$html  = '<a href="'.URL::site('admin/api/carouselvalue/list/'.$id.'?group_id='.$id).'" target="_iframe">上传图片</a> ';
 		$html .= parent::handle($id);

@@ -19,15 +19,6 @@ class Controller_Menu_Main extends Controller_Admin{
 		$parent_id = Arr::get($_REQUEST, 'parent_id', 0);
 		$right = ORM::factory($this->model_name, $parent_id)->as_array();
 		
-		/*如果绑定了目录，则load目录结构作为菜单*/
-		if ( ! empty($right) AND $right['catalog_id'] > 0)
-		{
-			$this->model_name = 'catalog';
-			$menu = Common_Menu::factory($this->model_name, 'parent_id')->sub($right['catalog_id'], 1);
-			$menu = $this->catalog_menu($menu, $right);
-			
-			die(json_encode($menu));
-		}
 		$menu = Common_Menu::factory($this->model_name, 'parent_id')->sub($parent_id, 1);
 		
 		$data = array();
@@ -50,6 +41,15 @@ class Controller_Menu_Main extends Controller_Admin{
 							'id'	  => $sub->id,
 							'target'  => $sub->target
 							);
+					}
+					//print_r($v->as_array());die;
+					/*如果绑定了目录，则load目录结构作为菜单*/
+					if ($v->catalog_id > 0)
+					{
+						$menu = Common_Menu::factory('catalog', 'parent_id')->sub($v->catalog_id, 1);
+						$menu = $this->catalog_menu($menu, $v->right, TRUE);
+						$data[$v->id]['list'] = $menu;
+						//die(json_encode($menu));
 					}
 				}
 			}
@@ -87,27 +87,54 @@ class Controller_Menu_Main extends Controller_Admin{
 				}
 			}
 		}
+		
+		/*如果绑定了目录，则load目录结构作为菜单*/
+		if ( ! empty($right) AND $right['catalog_id'] > 0)
+		{
+			$menu = Common_Menu::factory('catalog', 'parent_id')->sub($right['catalog_id'], 1);
+			$menu = $this->catalog_menu($menu, $right);
+			$data = array_merge($data, $menu);
+			//die(json_encode($menu));
+		}
+		//print_r($data);die;
 		die(json_encode($data));
 	}
 	
-	function catalog_menu($list = array(), $right = array())
+	function catalog_menu($list = array(), $right = array(), $end_menu = FALSE)
 	{
 		$data = array();
-		foreach ($list as $v)
+		
+		if ($end_menu === TRUE)
 		{
-			$data[$v->id]['name'] = $v->title;
-			$sub_items = Common_Menu::factory($this->model_name, 'parent_id')->sub($v->id, 1);
-			
-			$sub_items = Common::bind_language($this->model_name, $sub_items, $this->sys_language_id);
-			foreach ($sub_items as $sub)
+			foreach ($list as $sub)
 			{
-				$data[$v->id]['list'][] = array(
+				$data[] = array(
 					'current' => false,
 					'title'   => $sub->title,
-					'link'	  => URL::site($right['right'].'/'.$sub->id),
-					'id'	  => $sub->id,
+					'link'	  => URL::site($right.'/'.$sub->id),
+					'id'	  => 'cat'.$sub->id,
 					'target'  => ''
 					);
+			}
+		}
+		else
+		{
+			foreach ($list as $v)
+			{
+				$data['cat'.$v->id]['name'] = $v->title;
+				$sub_items = Common_Menu::factory('catalog', 'parent_id')->sub($v->id, 1);
+				
+				$sub_items = Common::bind_language('catalog', $sub_items, $this->sys_language_id);
+				foreach ($sub_items as $sub)
+				{
+					$data['cat'.$v->id]['list'][] = array(
+						'current' => false,
+						'title'   => $sub->title,
+						'link'	  => URL::site($right['right'].'/'.$sub->id),
+						'id'	  => $sub->id,
+						'target'  => ''
+						);
+				}
 			}
 		}
 		return $data;
