@@ -199,7 +199,7 @@ class Controller_Admin extends Controller
 			
 			array_unshift($languages, $default);
 			
-			$this->tabs['language'] = $languages;
+			if (count($languages) > 1)$this->tabs['language'] = $languages;
 		}
 		else
 		{

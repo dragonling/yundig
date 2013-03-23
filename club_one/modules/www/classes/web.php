@@ -25,7 +25,7 @@ class Web extends Controller{
 	
 	protected function set_config()
 	{
-		$lang = ORM::factory('language', Common_Main::language_id());
+		$lang = ORM::factory('language', Comm::language_id());
 		if ($lang->loaded())
 		{
 			I18n::$source = $lang->pack_name;
@@ -35,7 +35,7 @@ class Web extends Controller{
 			I18n::$source = I18n::$source;
 		}
 
-		$orm = ORM::factory('config')->where('module', '=', $this->module)->where('language_id', '=', Common_Main::language_id())->find_all()->as_array();
+		$orm = ORM::factory('config')->where('module', '=', $this->module)->where('language_id', '=', Comm::language_id())->find_all()->as_array();
 		if ( ! $orm)
 		{
 			$orm = ORM::factory('config')->where('module', '=', $this->module)->where('language_id', '=', 0)->find_all()->as_array();
@@ -49,7 +49,7 @@ class Web extends Controller{
 	
 	public static function route($name = '')
 	{
-		switch (Common_Main::language_id())
+		switch (Comm::language_id())
 		{
 			case 0:
 			case 1:
@@ -110,8 +110,8 @@ class Web extends Controller{
 		$catalog = ORM::factory('catalog')->where('title', '=', $position)->or_where('id', '=', $position)->find();
 		
 		if ( ! $catalog->loaded() ) return array();
-		$menu = Common_Main::factory('catalog', 'parent_id')
-							 ->get_treeviews_data($catalog->id, array('id', 'pk', 'parent_id', 'title', 'link', 'thumb', 'image', 'desc', 'rewrite_url', 'target', 'status'), 1);
+		$menu = Comm::factory('catalog', 'parent_id')
+					->get_treeviews_data($catalog->id, array('id', 'pk', 'parent_id', 'title', 'link', 'thumb', 'image', 'desc', 'rewrite_url', 'target', 'status'), 1);
 		unset($catalog);
 		foreach ($menu as $k => $v)
 		{
@@ -139,7 +139,7 @@ class Web extends Controller{
 						<?php endforeach; ?>
 					</ol>
 	*/
-	public static function show_sub_items($sub_items = array(), $route = 'list')
+	public static function show_sub_items($sub_items = array(), $route = 'list', $sub_num = 0)
 	{
 		if ( ! isset($sub_items) || count($sub_items) == 0) return '';
 		
@@ -164,7 +164,7 @@ class Web extends Controller{
 			$category = ORM::factory('product_category')->where('id', '=', $cat)->find();	
 			if ( ! $category->loaded() ) return array();
 		}
-		$menu = Common_Main::factory('product_category', 'parent_id')
+		$menu = Comm::factory('product_category', 'parent_id')
 							 ->get_treeviews_data($cat, array('id', 'pk', 'parent_id', 'title', 'rewrite_url', 'target', 'status'), 1);
 		
 		foreach ($menu as $k => $v)
@@ -224,7 +224,7 @@ class Web extends Controller{
 		
 		if ( count($data) > 0)
 		{
-			$data = Common_Main::bind_language('product', $data, Common_Main::language_id());
+			$data = Comm::bind_language('product', $data, Comm::language_id());
 		}
 		return array('items' => $data, 'pagination' => $pagination);
 	}
@@ -250,7 +250,7 @@ class Web extends Controller{
 		
 		if ( ! empty($data) && $orm->many_language === true) 
 		{
-			$data = Common_Main::bind_language('article', $data, Common_Main::language_id());
+			$data = Comm::bind_language('article', $data, Comm::language_id());
 		}
 		
 		$pagination = new Pagination(array(
@@ -277,11 +277,11 @@ class Web extends Controller{
 		{
 			$article = ORM::factory('article')->where('rewrite_url', 'like', $id)->find();	
 		}
-		$article = Common_Main::bind_language('article', $article, Common_Main::language_id())->as_array();
+		$article = Comm::bind_language('article', $article, Comm::language_id())->as_array();
 		
 		$article['contents'] = ORM::factory('article_contents')
 									->where('article_id', '=', $article['id'])
-									->where('language_id', '=', Common_Main::language_id())
+									->where('language_id', '=', Comm::language_id())
 									->order_by('id', 'asc')
 									->find_all()
 									->as_array();

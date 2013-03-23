@@ -95,6 +95,6 @@
 </head>
 <body>
 	<div class="location">
-		<?php echo ! empty($location) ? View::factory('widget/location', $location) : '';?>
+		<?php //echo ! empty($location) ? View::factory('widget/location', $location) : '';?>
 		<?php echo ! empty($tabs) ? View::factory('widget/tab') : '';?>
 	</div>
