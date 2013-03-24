@@ -15,7 +15,7 @@ class Form extends Kohana_Form {
 	 * @return  string
 	 * @uses    Form::input
 	 */
-	public static function checkboxes($name, array $options = NULL, $checked = FALSE, array $attributes = NULL)
+	public static function checkboxes($name, array $options = NULL, $checked = FALSE, array $attributes = NULL, $style = '&nbsp;&nbsp;')
 	{
 		
 		if (empty($options))
@@ -36,7 +36,11 @@ class Form extends Kohana_Form {
 			{
 				$attribute['checked'] = 'checked';
 			}
-			$checkboxes .= Form::input($name, $_value, $attribute) . $_title. '&nbsp;&nbsp;';
+			elseif(is_array($checked) && in_array($_value, $checked))
+			{
+				$attribute['checked'] = 'checked';			
+			}
+			$checkboxes .= '<label>'.Form::input($name, $_value, $attribute) . $_title. '</label>'.$style;
 		}
 		return $checkboxes;
 	}
