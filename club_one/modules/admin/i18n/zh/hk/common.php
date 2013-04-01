@@ -25,6 +25,7 @@
 	$_common['alt_edit']       = '編輯';
 	$_common['alt_delete']     = '刪除';
 	$_common['alt_required']     = '必填';
+	$_common['alt_save_success']       = '保存完成';
 	$_common['alt_update_success']     = '更新完成';
 	$_common['alt_comfirn_delete']     = '確定刪除？ 刪除后無法修復!';
 	$_common['alt_toggle_success']     = '狀態更新成功';
@@ -55,4 +56,5 @@
 	$_common['data_status'] = array(0 => '停用', 1 => '啟用');
 	$_common['data_yes_no'] = array(0 => '否', 1 => '是');
 	$_common['data_on_down'] = array(0 => '下線', 1 => '上線');
+	$_common['data_place_type'] = array(1 => '婚宴', 2 => '佳餚', 3 => '宴會');
 	return $_common;

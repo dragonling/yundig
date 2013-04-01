@@ -62,7 +62,8 @@ function uploadProgress(file, bytesLoaded) {
 
 function uploadSuccess(file, serverData) {
 	try {
-		addImage(serverData);
+		
+		addImage(serverData, this.customSettings.field);
 		var progress = new FileProgress(file,  this.customSettings.upload_target);
 		progress.setStatus("Thumbnail Created.");
 		progress.toggleCancel(false);

@@ -40,7 +40,7 @@ class Common_Main{
 					->as_array();
 		if ( ! empty($data) && $orm->many_language === true) 
 		{
-			$data = $this->bind_language($this->_model_name, $data, Common::language_id());
+		//	$data = $this->bind_language($this->_model_name, $data, Common::language_id());
 		}
 		return $data;
 	}

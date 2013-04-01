@@ -51,4 +51,5 @@
 	$_common['alt_confirm_lot_delete']  = '确定批量删除？';
 	
 	$_common['data_status'] = array(0 => '停用', 1 => '启用');
+	$_common['data_place_type'] = array(1 => '婚宴', 2 => '佳餚', 3 => '宴會');
 	return $_common;

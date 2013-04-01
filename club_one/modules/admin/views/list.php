@@ -3,7 +3,7 @@
 <div class="headbar">
 	<div class="operating">
 		<?php if ($self->auth_rights('admin/'.$self->request->directory().'/'.$self->request->controller().'/add/'.$self->request->param('param')) !== FALSE ) { ?>
-		<a href="<?php echo URL::site('admin/'.$self->request->directory().'/'.$self->request->controller().'/add/'.$self->request->param('param')) ?>">
+		<a href="<?php echo URL::site('admin/'.$self->request->directory().'/'.$self->request->controller().'/add/'.$self->request->param('param')).URL::query() ?>">
 		<button class="operating_btn" type="button"><span class="addition"><?php echo I18n::get('btn_append', 'common') ?></span></button></a>
 		<?php } ?>
 		<?php if ($self->auth_rights('admin/'.$self->request->directory().'/'.$self->request->controller().'/del/'.$self->request->param('param')) !== FALSE ) { ?>

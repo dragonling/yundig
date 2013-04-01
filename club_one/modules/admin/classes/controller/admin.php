@@ -271,7 +271,7 @@ class Controller_Admin extends Controller
 				{					
 					if (isset($data[$v]) && is_array($data[$v]))
 					{
-						$orm->$v = implode(',', $data[$v]);
+						$orm->$v = serialize($data[$v]);
 					}
 					elseif (isset($data[$v]) && $data[$v] !== NULL)
 					{
@@ -289,7 +289,7 @@ class Controller_Admin extends Controller
 			{
 				if (isset($data[$v]) && is_array($data[$v]))
 				{
-					$orm->$v = implode(',', $data[$v]);
+					$orm->$v = serialize($data[$v]);
 				}
 				elseif (isset($data[$v]) && $data[$v] !== NULL)
 				{
@@ -466,7 +466,7 @@ class Controller_Admin extends Controller
 					break;
 					
 				case 'self':
-					$this->request->redirect($this->request->referrer().URL::query(array('request_referrer' => Arr::get($_REQUEST, 'request_referrer', ''))));
+					$this->request->redirect($this->request->referrer().URL::query(array('request_referrer' => Arr::get($_REQUEST, 'request_referrer', ''), 'status' => 'success')));
 					break;
 			}
 			return;

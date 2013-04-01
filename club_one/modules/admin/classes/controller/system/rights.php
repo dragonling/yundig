@@ -167,10 +167,6 @@ class Controller_System_Rights extends Controller_Admin{
 		$this->template->routes  = $this->get_routes();
 		$this->template->modules = $this->get_modules();
 		
-		if (Arr::get($_GET, 'status', '') == 'success')
-		{
-			View::set_global('message', I18n::get('alt_update_success', 'system'));
-		}
 		//获取主键名称 用于编辑删除操作
 		$this->template->pk = $this->pk;
 	}

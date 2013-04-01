@@ -15,7 +15,9 @@ class Controller_Cms_Main extends Controller_Admin {
 	{		
 		$this->_model_name = "article";		
 		$this->category_id = $this->request->param('param');
+		$this->place_type = $this->request->query('place_type');
 		$this->page = Arr::get($_GET, 'page', 1);
+		$this->catalog = ORM::factory('catalog', $this->category_id)->as_array();
 		parent::before();			
 	}
 	/**
@@ -52,16 +54,47 @@ class Controller_Cms_Main extends Controller_Admin {
 		$this->template->pk = $this->pk;
 		
 		//数据信息
+		$auth_columns = unserialize($this->catalog['article_columns']);
+		
 		$orm = ORM::factory($this->_model_name);
-		$total_rows = ORM::factory($this->_model_name);
+		
+		if (is_array($auth_columns) && in_array('place_type', $auth_columns))
+		{
+			if ($this->place_type)
+			{
+				$orm->where('place_type', '=', $this->place_type);
+			}
+			$tabs = array();
+			foreach (I18n::get('data_place_type', 'common') as $k => $v)
+			{
+				$tabs[$k] = array(
+						'id'       => $k,
+						'name'     => 'place_type_' . $v,
+						'title'    => $v,
+						'selected' => $this->place_type == $k ? 'selected' : '',
+						'link'     => URL::site('admin/cms/main/list/'.$this->category_id).URL::query(array('place_type' => $k)),
+				);
+			}		
+			$default = array(
+					'id'       => 0,
+					'name'     => 'place_type_0',
+					'title'    => I18n::get('All', 'common'),
+					'selected' => $this->place_type == 0 ? 'selected' : '',
+					'link'     => URL::site('admin/cms/main/list/'.$this->category_id).URL::query(array('place_type' => 0)),
+					);		
+			array_unshift($tabs, $default);
+			$this->tabs['place_type_tabs'] = $tabs;
+		}
 		if ( ! empty($this->category_id) && is_numeric($this->category_id) )
 		{
 			$cats = Common::factory('catalog', 'parent_id')->get_options('pk', 'title', $this->category_id);
 			$cat_ids = array_keys($cats);
 			$cat_ids[] = $this->category_id;
 			$orm->where('category_id', 'in', $cat_ids);
-			$total_rows->where('category_id', 'in', $cat_ids);
 		}
+		
+		
+		$total_rows = clone $orm;
 		$data = $orm->offset(($this->page-1)*$this->page_rows)->limit($this->page_rows)->find_all()->as_array();
 			
 		if ( ! empty($data) && isset($this->model->many_language) && $orm->many_language === true)
@@ -85,7 +118,7 @@ class Controller_Cms_Main extends Controller_Admin {
 		//分类标签
 		/*
 		$tabs = array();
-		$category  = ORM::factory('catalog')->where('parent_id', '=', 1)->where('status', '=', 1)->order_by('sort_order')->find_all()->as_array('id', 'title');
+		$category  = ORM::factory('catalog')->where('parent_id', '=', $this->category_id)->where('status', '=', 1)->order_by('sort_order')->find_all()->as_array('id', 'title');
 		foreach ($category as $k => $v)
 		{
 			$tabs[$k] = array(
@@ -106,6 +139,7 @@ class Controller_Cms_Main extends Controller_Admin {
 		array_unshift($tabs, $default);
 		$this->tabs['category_tabs'] = $tabs;
 		*/
+		
 		return $this->template->data = $data;
 	
 	}	
@@ -269,15 +303,18 @@ class Controller_Cms_Main extends Controller_Admin {
 		unset($this->tabs['language']);
 		
 		//设定显示哪些可编辑内容
-		$article_columns = array();
+		$article_columns = array('category_id', 'title');
 		if (is_numeric($param))
 		{
-			$catalog = ORM::factory('catalog', $param)->as_array('id', 'article_columns');
-			$article_columns = explode(',', $catalog['article_columns']);
+			$auth_columns = unserialize($this->catalog['article_columns']);			
+			if (is_array($auth_columns)) $article_columns = array_merge($article_columns, $auth_columns);
 		}
-		
-		$base_column = array('template', 'category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status');
+		$base_column = array('category_id', 'template', 'place_type', 'title', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
+		$desc_column = array('content');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
+		$images_column  = array('images');
+		$videos_column  = array('videos');
+		
 		$my_columns  = array();
 		//系统设置 一般tag
 		foreach (I18n::get('data_article_types', 'cms') as $k => $v)
@@ -297,6 +334,7 @@ class Controller_Cms_Main extends Controller_Admin {
 					$my_columns[$k . '_column'][$col] = $columns[$col];
 				}
 			}
+			if (! isset($my_columns[$k . '_column'])) unset($types[$k]);
 		}
 		//设定显示内容编辑器
 		if (in_array('contents', $article_columns))
@@ -331,17 +369,20 @@ class Controller_Cms_Main extends Controller_Admin {
 		//获取主键名称 用于编辑删除操作
 		$this->template->pk = $this->pk;		
 		
-		//设定显示哪些可编辑内容
-		$article_columns = array();
+		//设定显示哪些可编辑内容 
+		$article_columns = array('id', 'category_id', 'title');
 		if (is_numeric($param))
 		{
-			$catalog = ORM::factory('catalog', $param)->as_array('id', 'article_columns');
-			$article_columns = explode(',', $catalog['article_columns']);
+			$auth_columns = unserialize($this->catalog['article_columns']);
+			if (is_array($auth_columns)) $article_columns = array_merge($article_columns, $auth_columns);
 		}
-		array_unshift($article_columns, 'id');
 		
-		$base_column = array('id', 'template', 'category_id', 'title', 'thumb', 'images', 'post_time', 'sort_order', 'status');
+		$base_column = array('category_id', 'id', 'template', 'place_type', 'title', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
+		$desc_column = array('content');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
+		$images_column  = array('images');
+		$videos_column  = array('videos');
+		
 		$my_columns  = array();
 		//系统设置 一般tag
 		foreach (I18n::get('data_article_types', 'cms') as $k => $v)
@@ -361,6 +402,7 @@ class Controller_Cms_Main extends Controller_Admin {
 					$my_columns[$k . '_column'][$col] = $columns[$col];
 				}
 			}
+			if (! isset($my_columns[$k . '_column'])) unset($types[$k]);
 		}
 		//设定显示内容编辑器
 		if (in_array('contents', $article_columns))
@@ -388,21 +430,33 @@ class Controller_Cms_Main extends Controller_Admin {
 	protected function blank_form_columns($col,$return_id=FALSE)
 	{
 		$data = parent::blank_form_columns($col,$return_id);
-		
-		$category_options = Common::factory('catalog', 'parent_id')->get_options('pk', 'title');
-		
-		$data['category_id']['field']  = Form::select("category_id", $category_options, $this->category_id);
+		$data['content'] = array('name' => 'Content', 'field' => '', 'desc' => '', 'validate' => array('rules' => '{required: false}', 'message' => "''"));
+				
+		//$data['category_id']['field']  = Form::select("category_id", $category_options, $this->category_id, array('disabled' => true));
+		$data['category_id']['field']  = $this->catalog['title'].Form::hidden("category_id", $this->category_id);
+		$data['place_type']['field']  = Form::select("place_type", I18n::get('data_place_type', 'common'), $this->place_type);
 		$data['post_time']['field'] = Form::input('post_time', date('Y-m-d H:i:s'), array('id'=>'_post_time','class'=>'half normal'));
 		$data['status']['field'] = Form::select('status', I18n::get('data_status', 'common'), 1);
 		$data['thumb']['field']  = View::factory('widget/upload', array('field'=>'thumb', 'value'=>'', 'path' => '/assets/uploads/article'));
+		$data['attach']['field'] = View::factory('widget/upload', array('field'=>'attach', 'value'=>'', 'path' => '/assets/uploads/article'));
 		$data['images']['field'] = View::factory('widget/album', array('field'=>'images', 'value'=>'', 'path' => '/assets/uploads/article'));
+		$data['videos']['field'] = View::factory('widget/album', array('field'=>'videos', 'value'=>'', 'path' => '/assets/uploads/article'));
+		$data['top']['field'] 	 = Form::select('top', I18n::get('data_yes_no', 'common'), 0);
+		$data['new']['field'] 	 = Form::select('new', I18n::get('data_yes_no', 'common'), 0);
+		
+		$contents = array((object)array('id' => 0, 'title' => 'New', 'content' => ''));
+		$data['content']['field']      = View::factory('cms/contents')->set('contents', $contents)->set('lang', 'en');
 		
 		$data['thumb']['validate']['rules'] = '{required: false}';	
+		$data['attach']['validate']['rules'] = '{required: false}';
 		$data['template']['validate']['rules'] = '{required: false}';	
-		$data['rewrite_url']['validate']['rules'] = '{required: false}';	
+		$data['rewrite_url']['validate']['rules'] = '{required: false}';
+		$data['seo_title']['validate']['rules'] = '{required: false}';
 		$data['seo_keywords']['validate']['rules'] = '{required: false}';		
 		$data['seo_description']['validate']['rules'] = '{required: false}';
 		$data['sort_order']['validate']['rules'] = '{required: false}';
+		$data['top']['validate']['rules'] = '{required: false}';
+		$data['new']['validate']['rules'] = '{required: false}';
 		return 	$data;
 	}
 	
@@ -418,13 +472,20 @@ class Controller_Cms_Main extends Controller_Admin {
 	{
 		$data = parent::full_form_columns($col,$orm);
 		
-		$category_options = Common::factory('catalog', 'parent_id')->get_options('pk', 'title');
-
-		$data['category_id']['field']  = Form::select("category_id", $category_options, $orm->category_id);
+		$data['category_id']['field']  = $this->catalog['title'].Form::hidden("category_id", $orm->category_id);
+		$data['place_type']['field']  = Form::select("place_type", I18n::get('data_place_type', 'common'), $orm->place_type);
 		$data['post_time']['field'] = Form::input('post_time', date('Y-m-d H:i:s', $orm->post_time), array('id'=>'_post_time','class'=>'half normal'));
 		$data['status']['field']  = Form::select('status', I18n::get('data_status', 'common'), $orm->status);
 		$data['thumb']['field']   = View::factory('widget/upload', array('field'=>'thumb', 'value'=>$orm->thumb, 'path' => '/assets/uploads/article'));
+		$data['attach']['field'] = View::factory('widget/upload', array('field'=>'attach', 'value'=>$orm->attach, 'path' => '/assets/uploads/article'));
 		$data['images']['field']  = View::factory('widget/album', array('field'=>'images', 'value'=>$orm->images, 'path' => '/assets/uploads/article'));
+		$data['videos']['field']  = View::factory('widget/album', array('field'=>'videos', 'value'=>$orm->videos, 'path' => '/assets/uploads/article'));
+		$data['top']['field'] 	 = Form::select('top', I18n::get('data_yes_no', 'common'), $orm->top);
+		$data['new']['field'] 	 = Form::select('new', I18n::get('data_yes_no', 'common'), $orm->new);
+		
+		$orm_contents = ORM::factory('article_contents')->where('article_id', '=', $orm->id)->where('language_id', '=', $this->language_id)->order_by('id', 'asc')->find_all();
+		$data['content']['field']      = View::factory('cms/contents')->set('contents', $orm_contents->as_array())->set('lang', 'en');
+		
 		return $data;
 	}
 }

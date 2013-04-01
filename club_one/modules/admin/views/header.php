@@ -82,15 +82,14 @@
 		$(".width6").addClass("width8");
 		$("#datalist").css({"width":"990px"});
 		$(".width2").hide();
-		}
+		};
 
 	//toggle action
 	var currentToggle = function(currentID){
 
 		current = currentID;
-	}
+	};
 
-<?php if (isset($message)) echo 'alert("'.$message.'");' ?>
 </script>
 </head>
 <body>

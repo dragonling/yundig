@@ -101,9 +101,6 @@ open_window(6, '<?php echo $v->name ?>', '<?php echo (trim($v->right) == '' || $
 	<div id="admin_left">
 		<ul class="submenu">
 		</ul>
-		<div id="copyright">
-			<p>Copyright &copy; 2012 <a href="http://www.konashop.net"><b>Kona Shop</b></a> </p>
-		</div>
 	</div>
 	<div id="admin_right">
 		<div id="info_bar">

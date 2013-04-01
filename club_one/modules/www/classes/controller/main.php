@@ -18,14 +18,24 @@ class Controller_Main extends Web{
 	 * 首页
 	 */
 	function action_index()
-	{		
-		$new_product  = $this->get_products(0, '', 1, 8, 'is_new');
-		$feat_product = $this->get_products(0, '', 1, 2, 'is_featured');
-		
+	{
 		$view = View::factory('index');
 		
-		$view->set('new_products', $new_product['items']);
-		$view->set('feat_product', $feat_product['items']);
+		$promo = Web::get_articles(31, 1, 5, 0, 1);	//最新優惠
+		$mesag  = Web::get_articles(32, 1, 5, 0, 1);	//最新消息
+		$activ = Web::get_articles(33, 1, 5, 0, 1);	//活動回顧
+		
+		$xinwg  = Web::get_articles(15, 1, 5);	//新聞稿
+		$baod   = Web::get_articles(17, 1, 5);	//報道
+		$cmcx   = Web::get_articles(16, 1, 5);	// 傳媒查詢
+		
+		$view->set('new_promo', $promo['items']);
+		$view->set('new_mesag', $mesag['items']);
+		$view->set('new_activ', $activ['items']);
+		
+		$view->set('xinwg', $xinwg['items']);
+		$view->set('baod',  $baod['items']);
+		$view->set('cmcx',  $cmcx['items']);
 		
 		View::set_global('cat', '9');
 		View::set_global('title', Web::config('title'));
@@ -158,7 +168,14 @@ class Controller_Main extends Web{
 		
 		if (isset($cat['template']) && trim($cat['template']) != '')
 		{
-			$view = View::factory($cat['template']);
+			if (substr($cat['template'], -1) == '/')
+			{
+				$view = View::factory($cat['template'].'list');
+			}
+			else
+			{
+				$view = View::factory($cat['template']);
+			}			
 		}
 		else
 		{
@@ -192,8 +209,19 @@ class Controller_Main extends Web{
 		$cat = Common_Main::bind_language('catalog', $cat, Common_Main::language_id())->as_array();
 		
 		
-		$article = $this->get_article($id);
-		if (isset($article['template']) && trim($article['template']) != '')
+		$article = $this->get_article($id, $cat['id']);
+		if (isset($cat['template']) && trim($cat['template']) != '' && substr($cat['template'], -1) == '/')
+		{
+			if (isset($article['template']) && trim($article['template']) != '')
+			{
+				$view = View::factory($cat['template'].$article['template']);
+			}
+			else
+			{
+				$view = View::factory($cat['template'].'detail');
+			}
+		}
+		elseif (isset($article['template']) && trim($article['template']) != '')
 		{
 			$view = View::factory($article['template']);
 		}

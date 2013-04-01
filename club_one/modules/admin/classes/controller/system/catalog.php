@@ -52,7 +52,9 @@ class Controller_System_Catalog extends Controller_Admin {
 		//获取主键名称 用于编辑删除操作
 		$this->template->pk = $this->pk;
 		
-		$data = Common::factory($this->_model_name, 'parent_id')->get_treeviews_data(0, array('id', 'pk', 'parent_id', 'sort_order', 'title', 'rewrite_url', 'status'));
+		$parent_id = $this->request->param('param', 0);
+		
+		$data = Common::factory($this->_model_name, 'parent_id')->get_treeviews_data($parent_id, array('id', 'pk', 'parent_id', 'sort_order', 'title', 'rewrite_url', 'status'));
 		$list = Common::make_treeviews($data);
 		
 		unset($data);
@@ -178,13 +180,16 @@ class Controller_System_Catalog extends Controller_Admin {
 	protected function blank_form_columns($col,$return_id=FALSE)
 	{
 		$data = parent::blank_form_columns($col,$return_id);
-		$data['parent_id']['field']   = Form::select("parent_id", Common::factory($this->_model_name, 'parent_id')->get_options('pk', 'title'), 0);
+		$parent_id = $this->request->param('param', 0);
+		$data['parent_id']['field']   = Form::select("parent_id", Common::factory($this->_model_name, 'parent_id')->get_options('pk', 'title'), $parent_id);
 		$data['target']['field']      = Form::select('target', I18n::get('data_target', 'common'), '_self');
 		$data['thumb']['field']       = View::factory('widget/upload', array('field'=>'thumb', 'value'=>'', 'path' => '/assets/uploads'));
 		$data['image']['field']       = View::factory('widget/upload', array('field'=>'image', 'value'=>'', 'path' => '/assets/uploads'));
 		$data['desc']['field']        = Form::textarea('desc', '');
 		$data['status']['field']      = Form::select('status', I18n::get('data_status', 'common'), 1);
-		$data['article_columns']['field']      = Form::checkboxes('article_columns[]', $this->article_cloumn_options(), '', NULL, "<br />\n");
+		
+		$data['article_columns']['field']  = 'All '.Form::checkbox('select_all', 1, 0, array('onclick' => '$(".article_columns").attr("checked", this.checked)')).'<br /><hr>'
+											.Form::checkboxes('article_columns[]', $this->article_cloumn_options(), '', array('class' => 'article_columns'), "<br />\n");
 		
 		$data['link']['validate']['rules'] = '{required: false}';
 		$data['thumb']['validate']['rules'] = '{required: false}';
@@ -216,7 +221,8 @@ class Controller_System_Catalog extends Controller_Admin {
 		$data['image']['field']       = View::factory('widget/upload', array('field'=>'image', 'value'=>$orm->image, 'path' => '/assets/uploads'));
 		$data['desc']['field']        = Form::textarea('desc', $orm->desc);
 		$data['status']['field']      = Form::select('status', I18n::get('data_status', 'common'), $orm->status);
-		$data['article_columns']['field']      = Form::checkboxes('article_columns[]', $this->article_cloumn_options(), explode(',', $orm->article_columns), NULL, "<br />\n");
+		$data['article_columns']['field']   = 'All '.Form::checkbox('select_all', 1, 0, array('onclick' => '$(".article_columns").attr("checked", this.checked)')).'<br /><hr>'
+											.Form::checkboxes('article_columns[]', $this->article_cloumn_options(), unserialize($orm->article_columns), array('class' => 'article_columns'), "<br />\n");
 		return $data;
 	}
 	
@@ -283,8 +289,10 @@ class Controller_System_Catalog extends Controller_Admin {
 		{
 			$options[$v['column_name']] = $v['comment'];
 		}
-		$options['contents'] = i18n::get('contents', 'catalog');
+		$options['content'] = i18n::get('content', 'catalog');
 		unset($options['id']);
+		unset($options['category_id']);
+		unset($options['title']);
 		return $options;
 	}
 }

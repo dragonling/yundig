@@ -49,8 +49,8 @@ class Controller_Api_Ad extends Controller_Admin{
 		$data = parent::blank_form_columns($col,$return_id);
 		$data['position_id']['field'] = Form::select("position_id",$this->ad_options());
 		$data['type']['field'] = Form::select("type",$this->type_options());
-		$data['image']['field'] = View::factory('widget/album', array('field'=>'image', 'value' => ''));
-		$data['content']['field'] = Form::textarea("content","",array('class'=>'medium half'));
+		$data['image']['field'] = View::factory('widget/upload', array('field' => 'image', 'value' => '', 'path' => '/assets/uploads'));
+		$data['content']['field'] = Form::textarea("content","",array('class' => 'medium half'));
 		return $data;		
 	}
 	
@@ -67,8 +67,8 @@ class Controller_Api_Ad extends Controller_Admin{
 		$data = parent::full_form_columns($col,$orm);
 		$data['position_id']['field'] = Form::select("position_id",$this->ad_options(),$orm->position_id);
 		$data['type']['field'] = Form::select("type",$this->type_options(),$orm->type);
-		$data['image']['field'] = View::factory('widget/upload', array('field'=>'image', 'value'=>$orm->image, 'path' => '/assets/uploads'));
-		$data['content']['field'] = Form::textarea("content",$orm->content,array('class'=>'medium half'));
+		$data['image']['field'] = View::factory('widget/upload', array('field' => 'image', 'value'=>$orm->image, 'path' => '/assets/uploads'));
+		$data['content']['field'] = Form::textarea("content",$orm->content,array('class' => 'medium half'));
 		return $data;
 	}
 	/**

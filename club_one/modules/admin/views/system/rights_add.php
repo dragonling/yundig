@@ -97,9 +97,6 @@
 	</div>
 </div>
 <script>
-	<?php if ($data->id > 0 && Common::language_id() != 0 ) {?>
-	//$('.language *').attr('disabled', true);
-	<?php } ?>
 	var get_controllers_url = '<?php echo URL::site('admin/system/rights/get_controllers'); ?>';	
 </script>
 <?=View::factory('footer')?>

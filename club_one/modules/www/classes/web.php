@@ -87,7 +87,7 @@ class Web extends Controller{
 	{
 		$pre .= (trim($pre) == '' ? '' : '/');
 		$str = ($rewrite_url == '' ? Web::route($route).$pre.$id : Web::route($route).$pre.$rewrite_url);
-		return URL::site($str).'.html';
+		return URL::site($str, 'http').'.html';
 	}
 	public static function query($str = '')
 	{
@@ -105,7 +105,7 @@ class Web extends Controller{
 	/**
 	*	网站导航菜单
 	*/
-	public static function get_catalogs($position = 'header', $cat = '')
+	public static function get_catalogs($position = 'header', $cat = '', $className = 'current')
 	{
 		$catalog = ORM::factory('catalog')->where('title', '=', $position)->or_where('id', '=', $position)->find();
 		
@@ -127,7 +127,7 @@ class Web extends Controller{
 			$menu[$k]['class'] = '';
 			if ((is_numeric($cat) && $cat == $v['pk']) || ($cat != '' && $cat == $v['rewrite_url']))
 			{
-				$menu[$k]['class'] = 'current';
+				$menu[$k]['class'] = $className;
 			}
 		}
 		return $menu;
@@ -232,18 +232,22 @@ class Web extends Controller{
 	/**
 	 *	文章列表
 	 */
-	public static function get_articles($catalog_id = 0, $page = 1, $rows = 10)
+	public static function get_articles($catalog_id = 0, $page = 1, $rows = 10, $top = 0, $new = 0)
 	{
 		$orm  = ORM::factory('article')->join('article_catalog', 'left');
-		$data = $orm->on('article_catalog.article_id', '=', 'article.id')
-					->where('article_catalog.catalog_id', '=', $catalog_id)
+		$orm->on('article_catalog.article_id', '=', 'article.id');
+		if ($top == 1) $orm->where('article.top', '=', 1);
+		if ($new == 1) $orm->where('article.new', '=', 1);
+		$data = $orm->where('article_catalog.catalog_id', '=', $catalog_id)
 					->offset(($page-1)*$rows)
 					->limit($rows)
+					->order_by('article.top', 'desc')
 					->order_by('article_catalog.sort_order', 'asc')
 					->find_all()
 					->as_array();
 					
 		$count  = ORM::factory('article')->join('article_catalog', 'left');
+		if ($top == 1) $count->where('article.top', '=', 1);
 		$count = $count->on('article_catalog.article_id', '=', 'article.id')
 					->where('article_catalog.catalog_id', '=', $catalog_id)
 					->count_all();
@@ -252,6 +256,17 @@ class Web extends Controller{
 		{
 			$data = Comm::bind_language('article', $data, Comm::language_id());
 		}
+		$catalog = ORM::factory('catalog', $catalog_id)->as_array();
+		$place_type = I18n::get('data_place_type', 'common');
+		foreach ($data as $k => $v)
+		{
+			$link = Web::url('article', $v->rewrite_url, $v->id, ($catalog['rewrite_url'] != '' ? $catalog['rewrite_url'] : $catalog['id']));
+			$v = $v->as_array();
+			$v['link'] = $link;
+			$v['place_type_name'] = (isset($place_type[$v['place_type']]) ? $place_type[$v['place_type']] : '');
+			$data[$k] = (object) $v;
+		}
+		
 		
 		$pagination = new Pagination(array(
 			'current_page'      => array('source' => 'route', 'key' => 'page'),
@@ -267,7 +282,7 @@ class Web extends Controller{
 	/**
 	 *	文章详情
 	 */
-	public static function get_article($id)
+	public static function get_article($id, $cat = 0)
 	{
 		if (is_numeric($id))
 		{
@@ -275,9 +290,19 @@ class Web extends Controller{
 		}
 		else
 		{
-			$article = ORM::factory('article')->where('rewrite_url', 'like', $id)->find();	
+			
+			if ($cat > 0)
+			{
+				$article = ORM::factory('article')->where('rewrite_url', 'like', $id)->where('category_id', '=', $cat)->find();
+			}
+			else
+			{
+				$article = ORM::factory('article')->where('rewrite_url', 'like', $id)->find();
+			}
 		}
 		$article = Comm::bind_language('article', $article, Comm::language_id())->as_array();
+		$article['images'] = unserialize($article['images']);
+		$article['videos'] = unserialize($article['videos']);
 		
 		$article['contents'] = ORM::factory('article_contents')
 									->where('article_id', '=', $article['id'])

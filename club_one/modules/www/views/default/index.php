@@ -1,29 +1,22 @@
 <?php echo View::factory('header'); ?>
 <div class="note">
      <ul class="noteul">
-          <li><a href="#">06/09/2012大舞臺蟬聯港島區最佳婚宴場地會所1號婚宴低至7折</a></li>
+	   <?php foreach ($new_mesag as $v) { ?>
+	   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>">[<?php echo $v->place_type_name; ?>] <?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+	   <?php } ?>
      </ul>
 </div>
 <div id="slides" class="focus">
     <div class="slides_container">
-        <div>
-            <a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/001.jpg" width="1000" height="430" /></a>
+		
+		<?php foreach (Web::get_carousel(1) as $v): ?>
+		<div>
+            <a href="<?php echo $v->link =='' ? '#' : $v->link; ?>" target="_blank"><img src="<?php echo $v->image; ?>" width="1000" height="430" /></a>
             <div class="caption" style="bottom:0">
-                <p>Happy Bokeh Thursday!</p>
+                <p><?php echo $v->title; ?></p>
             </div>
         </div>
-        <div>
-            <a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/001.jpg" width="1000" height="430" /></a>
-            <div class="caption" >
-                <p>Happy Bokeh Thursday!</p>
-            </div>
-        </div>
-        <div>
-            <a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/001.jpg" width="1000" height="430" /></a>
-            <div class="caption">
-                <p>Happy Bokeh Thursday!</p>
-            </div>
-        </div>
+		<?php endforeach; ?>
       </div>
       <a href="javascript:;" class="prev"></a>
       <a href="javascript:;" class="next"></a>
@@ -33,39 +26,34 @@
          <div class="chatitle"><span class="clu"><a href="javascript:;" class="cpve"></a><a href="javascript:;" class="cnext"></a></span>旗下場所</div>
          <div class="chadiv">
               <ul class="chaul clearfix">
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
-                   <li><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/002.jpg" width="320" height="180" /></a></li>
+				<?php $articles = Web::get_articles(30, 1, 20); ?>
+				<?php foreach ($articles['items'] as $v) { ?>
+				<li>
+					<a href="<?php echo $v->link; ?>"><img src="<?php echo URL::base('http').$v->thumb ?>" width="320" height="180" /></a>
+				<?php } ?>
                 </ul>
          </div>
          <div class="info">
             <h1 class="infoh1">ClubOne簡介</h1>
-            <p class="infocon"> 擁有五個特色婚宴場地，分別為百年古蹟大舞臺、私人場所ClubONE（Kowloon East/Kowloon Peak）、博藝會及德馨會，位處香港及九龍中心地段，位置優越，適合舉辦各類中西式婚宴。專業的婚禮統籌團隊，加上完美婚宴配套及主題宴佈置，為各新人締造非凡婚宴。</p>
+            <p class="infocon"> <?php echo Web::config('about_us'); ?> </p>
          </div>
     </div>
     <div class="charight">
      <div id="zSlider"  class="video">
             <div id="picshow" class="videopic">
                 <div id="picshow_img" class="videoimg">
-                    <ul>
-                      <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/1.jpg"></a></li>
-                      <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/2.jpg"></a></li>
-                      <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/3.jpg"></a></li>
-                      <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/4.jpg"></a></li>
-                      <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/5.jpg"></a></li>
+                    <ul>					
+						<?php foreach (Web::get_carousel(2, 5) as $v): ?>
+						<li><a href="<?php echo $v->link =='' ? '#' : $v->link; ?>" target="_blank"><img src="<?php echo $v->image; ?>"/></a></li>
+						<?php endforeach; ?>
                     </ul>
                 </div>
             </div>
             <div id="select_btn" class="videosmall">
                 <ul>
-                  <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/01.jpg"></a></li>
-                  <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/02.jpg"></a></li>
-                  <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/03.jpg"></a></li>
-                  <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/04.jpg"></a></li>
-                  <li><a href="#" target="_blank"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/05.jpg"></a></li>
+					<?php foreach (Web::get_carousel(2, 5) as $v): ?>
+					<li><a href="<?php echo $v->link =='' ? '#' : $v->link; ?>" target="_blank"><img src="<?php echo $v->thumb; ?>"/></a></li>
+					<?php endforeach; ?>
                 </ul>
             </div>	
      </div>
@@ -77,16 +65,19 @@
           </ul>
           <div class="hang">
               <ul class="tabcon">
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+                   <?php foreach ($new_mesag as $v) { ?>
+				   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>">[<?php echo $v->place_type_name; ?>] <?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+				   <?php } ?>
               </ul>
               <ul class="tabcon">
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+                   <?php foreach ($new_promo as $v) { ?>
+				   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>">[<?php echo $v->place_type_name; ?>] <?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+				   <?php } ?>
               </ul>
               <ul class="tabcon">
-                   <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+                   <?php foreach ($new_activ as $v) { ?>
+				   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>">[<?php echo $v->place_type_name; ?>] <?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+				   <?php } ?>
               </ul>
           </div>
      </div>
@@ -98,16 +89,19 @@
               </ul>
               <div class="gaodiv">
                   <ul class="tabcon">
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+					   <?php foreach ($xinwg as $v) { ?>
+					   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>"><?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+					   <?php } ?>
                   </ul>
                   <ul class="tabcon">
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+					   <?php foreach ($baod as $v) { ?>
+					   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>"><?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+					   <?php } ?>
                   </ul>
                   <ul class="tabcon">
-                       <li><a href="#">[婚宴] 03/09/2012 2012酒席全年7折</a></li>
+					   <?php foreach ($cmcx as $v) { ?>
+					   <li><a href="<?php echo $v->link; ?>" title="<?php echo htmlentities($v->title); ?>"><?php echo date('m/d/Y', $v->post_time); ?> <?php echo $v->title; ?></a></li>
+					   <?php } ?>
                   </ul>
               </div>
           </div>
@@ -132,93 +126,4 @@
          </div>
     </div>
 </div>
-<div class="footer">
-    <div class="maptop"><span>網站地圖</span></div>
-    <div class="map clearfix">
-         <dl class="mapdl clearfix">
-            <dt>主頁</dt>
-            <dd><a href="#">簡介</a></dd>
-            <dd><a href="#">集團獎項</a></dd>
-            <dd><a href="#">新聞稿</a></dd>
-            <dd><a href="#">傳媒查詢</a></dd>
-            <dd><a href="#">報導</a></dd>
-            <dd><a href="#">社會責任</a></dd>
-            <dd><a href="#">合作伙伴</a></dd>
-         </dl>
-         <dl class="mapdl clearfix">
-            <dt>婚宴</dt>
-            <dd><a href="#">簡介</a></dd>
-            <dd><a href="#">場地實景</a></dd>
-            <dd><a href="#">實景短片</a></dd>
-            <dd><a href="#">場地圖則</a></dd>
-            <dd><a href="#">婚宴套餐</a></dd>
-            <dd><a href="#">証婚酒會套餐</a></dd>
-            <dd><a href="#">自助西式套餐</a></dd>
-            <dd><a href="#">場地位置</a></dd>
-            <dd><a href="#">個人化服務</a></dd>
-            <dd><a href="#">- 主題婚禮</a></dd>
-            <dd><a href="#">- 雞尾酒會</a></dd>
-            <dd><a href="#">- 婚禮策劃師簡介</a></dd>
-            <dd><a href="#">- 婚禮策劃服務</a></dd>
-            <dd><a href="#">最新消息</a></dd>
-            <dd><a href="#">優惠通勝</a></dd>
-            <dd><a href="#">星級禮遇</a></dd>
-            <dd><a href="#">聯絡我們</a></dd>
-         </dl>
-         <dl class="mapdl clearfix">
-            <dt>佳餚</dt>
-            <dd><a href="#">簡介</a></dd>
-            <dd><a href="#">獎項</a></dd>
-            <dd><a href="#">廚司推介</a></dd>
-            <dd><a href="#">場地實景</a></dd>
-            <dd><a href="#">會員禮遇</a></dd>
-            <dd><a href="#">大廚介紹</a></dd>
-            <dd><a href="#">最新優惠</a></dd>
-            <dd><a href="#">場地位置</a></dd>
-         </dl>
-         <dl class="mapdl clearfix">
-            <dt>宴會</dt>
-            <dd><a href="#">簡介</a></dd>
-            <dd><a href="#">最新優惠</a></dd>
-            <dd><a href="#">場地實景</a></dd>
-            <dd><a href="#">場地圖則</a></dd>
-            <dd><a href="#">會議設備</a></dd>
-            <dd><a href="#">會議及宴會套餐</a></dd>
-            <dd><a href="#">宴會策劃</a></dd>
-            <dd><a href="#">場地位置</a></dd>
-         </dl>
-         <dl class="mapdl clearfix">
-            <dt>推廣及活動</dt>
-            <dd><a href="#">最新消息</a></dd>
-            <dd><a href="#">最新優惠</a></dd>
-            <dd><a href="#">活動回顧</a></dd>
-            <br /><br /><br />
-            <dt>優惠通勝</dt>
-            <dd><a href="#">星級禮遇</a></dd>
-         </dl>
-         <dl class="mapdl clearfix">
-            <dt>會員系統</dt>
-            <dd><a href="#">登入</a></dd>
-            <dd><a href="#">最新優惠</a></dd>
-            <dd><a href="#">會員報名表</a></dd>
-            <dd><a href="#">會員每月優惠</a></dd>
-            <dd><a href="#">會員活動</a></dd>
-            <dd><a href="#">廚商優惠</a></dd>
-            <dd><a href="#">會員資訊分享</a></dd>
-            <br /><br /><br />
-            <dt>聯絡我們</dt>
-            <dd><a href="#">客戶意見</a></dd>
-         </dl>
-
-    </div>
-    <div class="bottom">
-        <span class="tel"></span>
-        <div class="bologo"></div>
-        <div class="banquan">
-             <p><a href="#">手機版網頁</a><a href="#">使用條款</a><a href="#">聯絡我們</a></p>
-             <p>Copyright © 2013. ClueOne All Rights Reserved</p>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+<?php echo View::factory('footer'); ?>

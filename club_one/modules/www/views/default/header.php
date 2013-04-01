@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<LINK REL="SHORTCUT ICON" HREF="/favicon.ico">
 <title><?php echo @$title . ' - ' . Web::config('name')?></title>
 <meta name="keywords" content="<?php echo @$keywords ?>" />
 <meta name="description" content="<?php echo @$description ?>" />
@@ -70,13 +71,7 @@ $(document).ready(function(){
 			
 			<?php foreach (Web::get_catalogs('header', isset($cat) ? $cat : 0) as $nav) { ?>
 			<ul class="erji">
-				<?php if (isset($nav['sub_items'])) { ?>
-					<?php foreach ($nav['sub_items'] as $sub_nav) { ?>
-					<li><a href="<?php echo $sub_nav['link']; ?>" target="<?php echo $sub_nav['target']; ?>"><?php echo $sub_nav['title']; ?></a>
-					<?php 	} ?>
-				<?php } else { ?>
-					<li>
-				<?php } ?>
+				<?php if (isset($nav['sub_items'])) echo Web::show_sub_items($nav['sub_items'], 'articles'); ?>
 			</ul>
 			<?php } ?>
 		 </div>

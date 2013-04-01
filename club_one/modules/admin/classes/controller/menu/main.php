@@ -19,7 +19,7 @@ class Controller_Menu_Main extends Controller_Admin{
 		$parent_id = Arr::get($_REQUEST, 'parent_id', 0);
 		$right = ORM::factory($this->model_name, $parent_id)->as_array();
 		
-		$menu = Common_Menu::factory($this->model_name, 'parent_id')->sub($parent_id, 1);
+		$menu = Common::factory($this->model_name, 'parent_id')->sub($parent_id, 1);
 		
 		$data = array();
 		if (Auth::instance()->get_role()->super_admin == 1)
@@ -29,7 +29,7 @@ class Controller_Menu_Main extends Controller_Admin{
 				if ($v->type == 1)
 				{
 					$data[$v->id]['name'] = $v->name;
-					$sub_items = Common_Menu::factory($this->model_name, 'parent_id')->sub($v->id, 1);
+					$sub_items = Common::factory($this->model_name, 'parent_id')->sub($v->id, 1);
 					
 					$sub_items = Common::bind_language($this->model_name, $sub_items, $this->sys_language_id);
 					foreach ($sub_items as $sub)
@@ -37,7 +37,7 @@ class Controller_Menu_Main extends Controller_Admin{
 						$data[$v->id]['list'][] = array(
 							'current' => false,
 							'title'   => $sub->name,
-							'link'	  => URL::site($sub->right),
+							'link'	  => ($sub->catalog_id > 0 ? URL::site($sub->right.'/'.$sub->catalog_id) : URL::site($sub->right)),
 							'id'	  => $sub->id,
 							'target'  => $sub->target
 							);
@@ -46,7 +46,7 @@ class Controller_Menu_Main extends Controller_Admin{
 					/*如果绑定了目录，则load目录结构作为菜单*/
 					if ($v->catalog_id > 0)
 					{
-						$menu = Common_Menu::factory('catalog', 'parent_id')->sub($v->catalog_id, 1);
+						$menu = Common::factory('catalog', 'parent_id')->sub($v->catalog_id, 1);
 						$menu = $this->catalog_menu($menu, $v->right, TRUE);
 						$data[$v->id]['list'] = $menu;
 						//die(json_encode($menu));
@@ -59,14 +59,14 @@ class Controller_Menu_Main extends Controller_Admin{
 			$auth_roles = explode(',',	$this->role->rights);
 			$auth_roles = array_flip($auth_roles);
 			
-			foreach ($menu as $v)
+			foreach ($menu as $k => $v)
 			{
 				if (isset($auth_roles[$v->id]))
 				{				
 					if ($v->type == 1)
 					{
 						$data[$v->id]['name'] = $v->name;
-						$sub_items = Common_Menu::factory($this->model_name, 'parent_id')->sub($v->id, 1);
+						$sub_items = Common::factory($this->model_name, 'parent_id')->sub($v->id, 1);
 						$sub_items = Common::bind_language($this->model_name, $sub_items, $this->sys_language_id);
 						foreach ($sub_items as $sub)
 						{
@@ -77,7 +77,7 @@ class Controller_Menu_Main extends Controller_Admin{
 								$data[$v->id]['list'][] = array(
 									'current' => false,
 									'title'   => $sub->name,
-									'link'	  => URL::site($sub->right),
+									'link'	  => ($sub->catalog_id > 0 ? URL::site($sub->right.'/'.$sub->catalog_id) : URL::site($sub->right)),
 									'id'	  => $sub->id,
 									'target'  => $sub->target
 									);
@@ -87,16 +87,18 @@ class Controller_Menu_Main extends Controller_Admin{
 				}
 			}
 		}
-		
+		//print_r($data);die;
 		/*如果绑定了目录，则load目录结构作为菜单*/
 		if ( ! empty($right) AND $right['catalog_id'] > 0)
 		{
-			$menu = Common_Menu::factory('catalog', 'parent_id')->sub($right['catalog_id'], 1);
+			$menu = Common::factory('catalog', 'parent_id')->sub($right['catalog_id'], 1);
 			$menu = $this->catalog_menu($menu, $right);
 			$data = array_merge($data, $menu);
 			//die(json_encode($menu));
 		}
-		//print_r($data);die;
+		
+		$data = array_values($data);
+		
 		die(json_encode($data));
 	}
 	
@@ -122,7 +124,7 @@ class Controller_Menu_Main extends Controller_Admin{
 			foreach ($list as $v)
 			{
 				$data['cat'.$v->id]['name'] = $v->title;
-				$sub_items = Common_Menu::factory('catalog', 'parent_id')->sub($v->id, 1);
+				$sub_items = Common::factory('catalog', 'parent_id')->sub($v->id, 1);
 				
 				$sub_items = Common::bind_language('catalog', $sub_items, $this->sys_language_id);
 				foreach ($sub_items as $sub)
@@ -179,7 +181,7 @@ class Controller_Menu_Main extends Controller_Admin{
 	{
 		
 		$options =  DB::select('id', 'title')->from('admin_menu')->execute()->as_array("id","title");
-		$options[0] = "顶级菜单";
+		$options[0] = "Root";
 		ksort($options); 
 		return $options;
 		
@@ -194,7 +196,7 @@ class Controller_Menu_Main extends Controller_Admin{
 	}
 	public function target_options()
 	{
-		return  array('_self'=>'当前窗口',"_blank"=>'新窗口','_ajax'=>'Ajax','_iframe'=>'网页框架');
+		return  I18n::get('data_target', 'common');
 	}
 	/**
 	 * 
