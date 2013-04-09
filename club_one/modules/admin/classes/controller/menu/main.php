@@ -12,11 +12,12 @@ class Controller_Menu_Main extends Controller_Admin{
 	{
 		$this->without_auth = TRUE;
 		$this->model_name = "admin_rights";
-		parent::before();				
+		parent::before();
 	}
 	function action_sub()
 	{
-		$parent_id = Arr::get($_REQUEST, 'parent_id', 0);
+		$parent_id = Arr::get($_GET, 'parent_id', 0);
+		
 		$right = ORM::factory($this->model_name, $parent_id)->as_array();
 		
 		$menu = Common::factory($this->model_name, 'parent_id')->sub($parent_id, 1);
@@ -62,7 +63,7 @@ class Controller_Menu_Main extends Controller_Admin{
 			foreach ($menu as $k => $v)
 			{
 				if (isset($auth_roles[$v->id]))
-				{				
+				{
 					if ($v->type == 1)
 					{
 						$data[$v->id]['name'] = $v->name;
@@ -83,6 +84,15 @@ class Controller_Menu_Main extends Controller_Admin{
 									);
 							}
 						}
+					}
+					
+					/*如果绑定了目录，则load目录结构作为菜单*/
+					if ($v->catalog_id > 0)
+					{
+						$menu = Common::factory('catalog', 'parent_id')->sub($v->catalog_id, 1);
+						$menu = $this->catalog_menu($menu, $v->right, TRUE);
+						$data[$v->id]['list'] = $menu;
+						//die(json_encode($menu));
 					}
 				}
 			}

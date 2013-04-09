@@ -207,6 +207,7 @@ class Controller_Main extends Web{
 			$cat = ORM::factory('catalog')->where('rewrite_url', 'like', $cat)->find();
 		}
 		$cat = Common_Main::bind_language('catalog', $cat, Common_Main::language_id())->as_array();
+		$cat['link'] = Web::url('articles', $cat['rewrite_url'], $cat['id']);
 		
 		
 		$article = $this->get_article($id, $cat['id']);

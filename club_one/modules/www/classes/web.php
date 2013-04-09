@@ -239,6 +239,7 @@ class Web extends Controller{
 		if ($top == 1) $orm->where('article.top', '=', 1);
 		if ($new == 1) $orm->where('article.new', '=', 1);
 		$data = $orm->where('article_catalog.catalog_id', '=', $catalog_id)
+					->where('article.status', '=', 1)
 					->offset(($page-1)*$rows)
 					->limit($rows)
 					->order_by('article.top', 'desc')
@@ -304,24 +305,32 @@ class Web extends Controller{
 		$article['images'] = unserialize($article['images']);
 		$article['videos'] = unserialize($article['videos']);
 		
-		$article['contents'] = ORM::factory('article_contents')
-									->where('article_id', '=', $article['id'])
-									->where('language_id', '=', Comm::language_id())
-									->order_by('id', 'asc')
-									->find_all()
-									->as_array();
-		if (count($article['contents']) == 0)
-		{
-			$article['contents'] = ORM::factory('article_contents')
-										->where('article_id', '=', $article['id'])
-										->where('language_id', '=', 0)
-										->order_by('id', 'asc')
-										->find_all()
-										->as_array();		
-		}
+		$article['contents'] = self::get_article_contents($article['id']);
+		
 		return $article;
 	}
 	
+	public static function get_article_contents($article_id = 0)
+	{
+		if ($article_id == 0) return array();
+		
+		$contents = ORM::factory('article_contents')
+						->where('article_id', '=', $article_id)
+						->where('language_id', '=', Comm::language_id())
+						->order_by('id', 'asc')
+						->find_all()
+						->as_array();
+		if (count($contents) == 0)
+		{
+			$contents = ORM::factory('article_contents')
+							->where('article_id', '=', $article_id)
+							->where('language_id', '=', 0)
+							->order_by('id', 'asc')
+							->find_all()
+							->as_array();		
+		}
+		return $contents;
+	}
 	/**
 	 * 获取轮播列表
 	 */

@@ -21,6 +21,7 @@
 	//---------- 错误信息 ----------//
 	$_login['err_login']     = '認證失敗';
 	$_login['err_auth']      = '對不起你的權限不夠';
+	$_login['err_cannot_empty'] = '不能留空，必須填寫';
 	
 	//---------- 成功信息 ----------//
 	$_login['suc_login']  = '';
@@ -33,7 +34,7 @@
 	
 	//---------- 數組信息 ----------//
 	$_login['data_gender']      = array(1 => '男', 0 => '女');
-	$_login['data_marriage']    = array(0 => '未婚', 1 => '已婚');
+	$_login['data_marriage']    = array(0 => '未婚', 1 => '已婚', 2 => '準備結婚', 3 => '拍拖', 4 => '單身');
 	$_login['data_county']      = array(0 => '請選擇', 1 => '九龍', 2 => '油麻地');
 	$_login['data_education']   = array(0 => '請選擇', 1 => '小学', 2 => '中学', 3 => '大学');
 	$_login['data_profession']  = array(0 => '請選擇', 1 => 'CEO', 2 => 'CTO', 3 => 'COO');

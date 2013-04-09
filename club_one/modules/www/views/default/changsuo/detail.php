@@ -1,9 +1,10 @@
+<?php /*無邊框詳情頁*/  ?>
 <?php echo View::factory('header'); ?>
 
 <div class="main clearfix">
      <?php 
 		//left
-		echo View::factory('changsuo/left', array('cat' => $catalog['id'], 'id' => $data['id']));
+		echo View::factory('changsuo/left', array('catalog' => $catalog, 'id' => $data['id']));
 	 ?>
      <div class="right">
           <ul class="menu">
@@ -14,6 +15,13 @@
 			<?php } ?>
           </ul>
          <div style="width:800px">
+			<?php
+				if ($data['maps'] != '')
+				{
+					$maps = unserialize($data['maps']);
+					if (is_array($maps)) echo View::factory('google_map', array('maps' => $maps));
+				}
+			?>
 			<?php foreach ($data['contents'] as $v) { ?>
 			<?php echo $v->content; ?>
 			<?php } ?>

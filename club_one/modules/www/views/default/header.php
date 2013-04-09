@@ -13,26 +13,6 @@
 <script type="text/javascript" src="<?php echo URL::base('http') ?>assets/themes/default/js/lrtk.js"></script>
 <script type="text/javascript" src="<?php echo URL::base('http') ?>assets/themes/default/js/jq.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	/* datatable */
-	var validator = $("#login_form").validate({
-		rules: {   
-			email: {required: true}  ,
-			password: {required: true}  ,
-		}
-		success: function(label) {
-			// set &nbsp; as text for IE
-			label.html("&nbsp;").addClass("ok");
-		}
-	});
-
-
-});
-
-</script>
-
 </head>
 
 <body>
@@ -40,10 +20,11 @@ $(document).ready(function(){
 		<div class="logo"><a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/logo.gif" width="80" height="110" /></a></div>
 		<div class="topright">
 			 <div class="login">
-			 <form id="login_form" method="post" action="<?php echo Web::url('', 'user/authorize', 1); ?>">
+			 <form id="login_form" method="post" action="<?php echo Web::url('', 'login/authorize', 1); ?>">
 				<span class="denglu">登入電郵<input type="text" name="username" id="username"/></span>
 				<span class="mima">密碼<input type="text" name="password" id="password" /></span>
-				<a href="javascript:;" class="deng" onclick="$('#login_form').submit();"></a><a href="#" class="ji"></a>
+				<a href="javascript:;" class="deng" onclick="$('#login_form').submit();"></a>
+				<a href="<?php echo URL::site('user'); ?>" class="ji"></a>
 				<span class="bo">
 				<a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/f.gif" width="20" height="22" /></a>
 				<a href="#"><img src="<?php echo URL::base('http') ?>assets/themes/default/images/x.gif" width="20" height="22" /></a>

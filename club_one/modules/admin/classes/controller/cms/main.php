@@ -309,11 +309,12 @@ class Controller_Cms_Main extends Controller_Admin {
 			$auth_columns = unserialize($this->catalog['article_columns']);			
 			if (is_array($auth_columns)) $article_columns = array_merge($article_columns, $auth_columns);
 		}
-		$base_column = array('category_id', 'template', 'place_type', 'title', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
-		$desc_column = array('content');
-		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
+		$base_column = array('category_id', 'template', 'place_type', 'title', 'desc', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
+		$desc_column = array('content');$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
 		$images_column  = array('images');
 		$videos_column  = array('videos');
+		$maps_column 	= array('maps');
+		
 		
 		$my_columns  = array();
 		//系统设置 一般tag
@@ -377,11 +378,12 @@ class Controller_Cms_Main extends Controller_Admin {
 			if (is_array($auth_columns)) $article_columns = array_merge($article_columns, $auth_columns);
 		}
 		
-		$base_column = array('category_id', 'id', 'template', 'place_type', 'title', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
+		$base_column = array('category_id', 'id', 'template', 'place_type', 'title', 'desc', 'thumb', 'attach', 'post_time', 'sort_order', 'top', 'new', 'status');
 		$desc_column = array('content');
 		$seo_column  = array('rewrite_url', 'seo_title', 'seo_keywords', 'seo_description');
 		$images_column  = array('images');
 		$videos_column  = array('videos');
+		$maps_column 	= array('maps');
 		
 		$my_columns  = array();
 		//系统设置 一般tag
@@ -443,6 +445,10 @@ class Controller_Cms_Main extends Controller_Admin {
 		$data['videos']['field'] = View::factory('widget/album', array('field'=>'videos', 'value'=>'', 'path' => '/assets/uploads/article'));
 		$data['top']['field'] 	 = Form::select('top', I18n::get('data_yes_no', 'common'), 0);
 		$data['new']['field'] 	 = Form::select('new', I18n::get('data_yes_no', 'common'), 0);
+		$data['maps']['field']   = View::factory('widget/google_map');
+		$data['desc']['field'] 	 = Form::textarea('desc');
+		$data['seo_description']['field'] = Form::textarea('seo_description');
+		
 		
 		$contents = array((object)array('id' => 0, 'title' => 'New', 'content' => ''));
 		$data['content']['field']      = View::factory('cms/contents')->set('contents', $contents)->set('lang', 'en');
@@ -482,11 +488,30 @@ class Controller_Cms_Main extends Controller_Admin {
 		$data['videos']['field']  = View::factory('widget/album', array('field'=>'videos', 'value'=>$orm->videos, 'path' => '/assets/uploads/article'));
 		$data['top']['field'] 	 = Form::select('top', I18n::get('data_yes_no', 'common'), $orm->top);
 		$data['new']['field'] 	 = Form::select('new', I18n::get('data_yes_no', 'common'), $orm->new);
+		$data['maps']['field']   = View::factory('widget/google_map', array('maps' => unserialize($orm->maps)));
+		$data['desc']['field'] 	 = Form::textarea('desc', $orm->desc);
+		$data['seo_description']['field'] = Form::textarea('seo_description', $orm->seo_description);
 		
 		$orm_contents = ORM::factory('article_contents')->where('article_id', '=', $orm->id)->where('language_id', '=', $this->language_id)->order_by('id', 'asc')->find_all();
 		$data['content']['field']      = View::factory('cms/contents')->set('contents', $orm_contents->as_array())->set('lang', 'en');
 		
 		return $data;
+	}
+	
+	/**
+	 * 
+	 * 列表静态操作方法
+	 * @param primary_key $id
+	 */
+	public static function handle($id, $row = NULL)
+	{
+		$request = new Request($_SERVER['REQUEST_URI']);
+		
+		$param = '~/';
+		if ($request->param('param') != '') $param = $request->param('param').'/'; 
+		$edit = URL::site('admin/'.$request->directory().'/'.$request->controller().'/edit/'.$param.$id);
+		$anchor = '<a href="'.$edit.'">'.HTML::image('assets/admin/images/icon_edit.gif', array('title' => I18n::get('alt_edit', 'common'))). ' ' .I18n::get('alt_edit', 'common').'</a> ';
+		return $anchor;
 	}
 }
 ?>

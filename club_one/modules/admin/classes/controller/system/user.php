@@ -63,6 +63,10 @@ class Controller_System_User extends Controller_Admin{
 		{
 			unset($data['password']);
 		}
+		else
+		{
+			$data['password'] = Auth::instance()->hash($data['password']);
+		}
 		
 		foreach($this->columns as $k=>$v)
 		{

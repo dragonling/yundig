@@ -54,6 +54,10 @@
 	}
 	var show_center = function (){
 		var center = map.getCenter();	//center.lat() center.lng()
+		alert(marker.title);
+		for (i in marker){
+			alert(i);
+		}
 		var point = marker.getPosition();	// point.lat()   point.lng()
 		//var url = "http://maps.google.com/maps/api/staticmap?center=" + center.lat() + ',' + center.lng() + "&zoom=" + map.zoom + "&size=520x340&maptype=" + map.getMapTypeId() + "&markers=" + point.lat() + ',' + point.lng() + "&sensor=false";
                

@@ -3,7 +3,7 @@
 <div class="main clearfix">
      <?php 
 		//left
-		echo View::factory('changsuo/left', array('cat' => $catalog['id'], 'id' => $data['id']));
+		echo View::factory('changsuo/left', array('catalog' => $catalog, 'id' => $data['id']));
 	 ?>
      <div class="right">
           <ul class="menu">

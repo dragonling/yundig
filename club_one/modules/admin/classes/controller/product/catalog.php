@@ -115,7 +115,7 @@ class Controller_Product_Catalog extends Controller_Admin {
 	 */
 	public static function handle($id)
 	{
-		$request = new Request($_SERVER['PATH_INFO']);
+		$request = new Request($_SERVER['REQUEST_URI']);
 		
 		$param = '~/';
 		if ($request->param('param') != '') $param = $request->param('param').'/'; 

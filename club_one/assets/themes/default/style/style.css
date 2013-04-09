@@ -137,7 +137,7 @@ body{ font-size:12px; font-family:'新細明體',Arial, Helvetica, sans-serif; w
 
 .left{ width:200px; min-height:200px; height:auto !important; height:200px; overflow:visible; float:left;}
 .lefttop{ padding-top:30px; padding-bottom:10px}
-.sub { padding-right:20px; width:180px;}
+.sub { padding-right:20px; width:180px; padding-bottom:20px}
 .sub li{width:180px; height:30px; line-height:30px; text-align:center;}
 .sub li a{ height:30px; line-height:30px; display:block; color:#5f5851; font-size:16px; font-weight:bold;}
 .sub li a:hover{ color:#ac1b80; background:url(../images/ico01.gif) no-repeat 15px center}
@@ -278,3 +278,162 @@ body{ font-size:12px; font-family:'新細明體',Arial, Helvetica, sans-serif; w
 .linkpic dt img{ width:75px; height:50px; border:2px solid #ccc; margin:0 auto}
 .linkpic dd{width:590px; float:left; line-height:20px; color:#333; width:615px}
 .news{ font-size:18px; font-weight:bold; margin-bottom:30px}
+
+
+.hudong{ height:270px; margin-bottom:10px;}
+.hudiv{ width:400px; height:255px; padding-top:15px; background:url(../images/hudiv.gif) no-repeat; float:left}
+.huone{ background:url(../images/huone.gif) no-repeat;}
+.huh1{ height:35px; background:url(../images/hu.gif) no-repeat left center; margin-bottom:5px}
+.more{ width:55px; height:30px; display:block; margin-left:130px; background:url(../images/more.gif) no-repeat}
+.hudl{ width:360px; height:90px; margin:0 auto; padding-bottom:15px;}
+.hudl dt{ width:170px; height:90px; float:left;}
+.hudl dd{ width:180px; height:90px; padding-left:10px; float:left;}
+.hutitle{ height:25px; line-height:25px; }
+.hutitle a{ color:#ac1a7f; font-size:16px; font-weight:bold;}
+.hutitle a:hover{color:#ac1a7f; text-decoration:underline}
+.hudate{ height:20px; line-height:20px; color:#cb920f; font-size:13px; font-family:Arial, Helvetica, sans-serif}
+.hucon{ height:45px; line-height:15px; color:#5f5851}
+
+.dai{ width:800px; margin-bottom:5px; clear:both}
+.daitop{ height:35px; padding-top:15px; background:url(../images/daitop.gif) no-repeat}
+.daitop span{ display:block; height:35px; float:left}
+.blog{ float:right; height:25px; width:90px; background:url(../images/blog.gif) no-repeat; margin-right:20px;}
+.daicon{ background:url(../images/daicon.gif) repeat-y}
+.daiul{ width:770px; margin:0 auto; padding-top:10px;}
+.daiul li{ width:90px; height:110px; float:left; margin:0 10px; display:inline}
+.daiul li img{ margin-bottom:7px;}
+.daiul li a{ color:#5f5851}
+.daiul li a:hover{ color:#fe0000}
+.daidl{ height:100px; width:345px; float:left; margin:0 27px; padding-top:10px; padding-bottom:5px; display:inline}
+.daidl dt{ width:150px; height:100px; float:left}
+.daidl dd{ width:175px; height:100px; padding-left:20px; float:left;}
+.daidl dd .hucon{ height:55px; line-height:18px;}
+.meul { width:600px; margin:0 auto;}
+.meul li{ height:31px; line-height:31px; width:200px; margin-top:10px; float:left}
+.meul li a{ height:31px; line-height:31px; color:#ac1a7f; font-size:16px; font-weight:bold; padding-left:40px; display:inline-block}
+.meul li a:hover{color:#ac1a7f; text-decoration:underline}
+.meul li.m01{ background:url(../images/m01.gif) no-repeat}
+.meul li.m02{ background:url(../images/m02.gif) no-repeat}
+.meul li.m03{ background:url(../images/m03.gif) no-repeat}
+.meul li.m04{ background:url(../images/m04.gif) no-repeat}
+.meul li.m05{ background:url(../images/m05.gif) no-repeat}
+.meul li.m06{ background:url(../images/m06.gif) no-repeat}
+.daibottom{ clear:both; height:25px; background:url(../images/daibottom.gif) no-repeat}
+.ditu{ clear:both; height:450px; width:800px; margin-bottom:10px}
+.address{ clear:both; width:800px;}
+.address p{ line-height:25px; color:#333; font-weight:bold; font-size:14px}
+.vip{ height:330px; width:1000px; background:url(../images/vip.jpg) no-repeat}
+.vipdiv{ width:355px; margin-left:345px; height:200px; padding-top:130px; float:left; display:inline;}
+.vipul{ margin-bottom:20px}
+.vipul li{ height:24px; line-height:24px; color:#5f5851; background:url(../images/ico03.gif) no-repeat left center; padding-left:15px}
+.ru{ width:100px; height:28px; display:block; background:url(../images/ru.gif) no-repeat; margin-left:200px}
+.vipuser{ width:300px; height:210px; padding-top:50px; float:left;}
+.viph1{ height:50px; line-height:50px; color:#ac1a7f; font-weight:bold; font-weight:bold; text-indent:25px;; margin-bottom:20px}
+.yuan li{ height:26px; line-height:26px; margin-bottom:24px; color:#605851;}
+.yuan li span{ width:80px; height:26px; line-height:26px; float:left; text-align:center;}
+.yuan li input{ float:left; height:24px; line-height:24px; width:178px; border:1px solid #e5e5e5; border-left:1px solid #999; border-top:1px solid #999}
+.yuan li .mi{ width:118px;}
+.yuan li .vi{ width:50px; height:26px; float:left; background:url(../images/v.gif) no-repeat; margin-left:10px}
+.wan{ color:#605851; margin:0 5px; }
+.wan:hover{ color:#fe0000}
+.huiyuan{ width:1000px; height:450px; background:url(../images/huiyuan.jpg) no-repeat}
+.dengji{ width:160px; height:40px; display:block; background:url(../images/dengji.gif) no-repeat; display:block}
+.yuandiv{ margin-left:100px; padding-top:230px}
+.clubvip{ width:1000px; height:270px; background:url(../images/clubvip.jpg) no-repeat}
+.clubvip .vipul{ margin-left:35px; padding-top:130px;}
+.viptable{ clear:both; width:1000px; background:#f5f5f5}
+.yuanh1{ height:35px; line-height:35px; color:#b02786; font-size:20px; font-weight:bold; font-style:italic; padding-left:30px}
+.yuanh2{ height:35px; line-height:35px; color:#666; font-size:15px; padding-left:30px}
+.clup{ width:940px; margin:20px auto 0; background:#fff;}
+.clubtop{ height:15px; background:url(../images/clubtop.gif) no-repeat left top; margin-bottom:15px}
+.clubbottom{ height:15px; background:url(../images/clubbottom.gif) no-repeat left top; clear:both;}
+.clubtable{ width:940px;}
+.clubtable tr th{ height:50px; line-height:50px; padding-left:70px; color:#5e5239; font-size:15px}
+.clubtable tr th span{ color:#ff9900; padding-right:10px}
+.clubtable tr td{height:50px; line-height:50px; color:#5e5239; font-size:13px}
+.ct{ width:398px;border:1px solid #e5e5e5; border-left:1px solid #999; border-top:1px solid #999; height:28px; line-height:28px; float:left}
+.bt{ width:148px; float:left}
+.ming{ height:30px; width:55px; background:url(../images/m.gif) no-repeat; float:left}
+.xing{ height:30px; width:55px; background:url(../images/c.gif) no-repeat; float:left}
+.ra{ padding-right:20px}
+.ra input{ margin-right:5px}
+.sel{border:1px solid #e5e5e5; border-left:1px solid #999; border-top:1px solid #999; height:28px; line-height:28px; width:90px; margin-right:15px}
+.gt{ width:188px}
+.cubtitle{ height:30px; line-height:30px; color:#5e5239; font-size:15px; padding-left:70px}
+.tixun{ margin-left:70px; padding-top:20px;padding-bottom:55px}
+.zixun{ line-height:30px; color:#5e5239}
+.zixun input{ margin-right:5px;}
+.zixun a{ color:#d43b9f}
+.zixun a:hover{ color:#d43b9f; text-decoration:underline}
+.tibtn{ height:30px; padding-top:50px; padding-left:100px; }
+.tibtn a{ width:100px; height:30px; display:inline-block; margin:0 10px;}
+.ti{ background:url(../images/ti.gif) no-repeat}
+.cannel{ background:url(../images/cannel.gif) no-repeat}
+.supul{ padding-top:20px; width:760px; margin:0 auto}
+.supul li{ width:150px; height:225px; float:left; margin:0 20px 20px; display:inline}
+.supic{ width:148px; height:148px; display:block; border:1px solid #e7e7e7; margin-bottom:10px;}
+.supname{ height:20px; line-height:20px; text-align:center; color:#5f5851; font-size:13px; display:block; margin-bottom:20px}
+.xiang{ height:25px; width:60px; display:block; background:url(../images/xiang.gif) no-repeat; margin:0 auto}
+.page{ height:20px; text-align:center; padding-top:20px}
+.page a{ width:20px; height:20px; line-height:20px; text-align:center; display:inline-block; margin:0 3px; background:url(../images/page.gif) repeat-x left bottom; color:#333}
+.page a:hover{ background:url(../images/pagehover.gif) repeat-x left bottom; color:#fff}
+.page .pageye{ width:18px; height:18px; border:1px solid #676767}
+.page .pagexuan{background:url(../images/pagehover.gif) repeat-x left bottom; color:#fff}
+.jiaodian{ height:350px; width:800px; margin:0 auto 20px; clear:both; position:relative; overflow:hidden}
+.jiaodian .prev{ top:120px}
+.jiaodian .next{ top:120px}
+.dan{ width:800px; clear:both}
+.dantop{ height:40px; background:url(../images/dantop.gif) no-repeat}
+.dantitle{ height:38px; padding:1px 0 1px 10px; float:left}
+.dancon{ border-left:1px solid #e0e0e0; border-right:1px solid #e0e0e0; width:798px;  clear:both;}
+.danul{ width:780px; margin:0 auto; padding-top:20px}
+.danul li{ width:140px; float:left; line-height:20px; height:135px; margin:0 8px; display:inline}
+.danul li a img{ width:140px; height:90px; margin-bottom:5px;}
+.danul li a{ color:#333;}
+.danul li a:hover{ color:#fe0000;}
+.danbottom{ clear:both; height:10px; line-height:0px; font-size:0px; background:url(../images/danbottom.gif) no-repeat; margin-bottom:10px}
+.danleft{ width:610px; float:left;}
+.liu{ width:610px; clear:both}
+.liutop{ height:40px; background:url(../images/liutop.gif) no-repeat}
+.liutab{ height:35px; padding-top:5px; padding-right:15px; float:right}
+.liutab li{ height:35px; line-height:35px; width:70px; text-align:center; float:left; background:url(../images/hr.gif) no-repeat right top}
+.liutab li a{ display:block; color:#333}
+.liutab li a:hover{ color:#fe0000}
+.liutab li.liuxuan{height:34px; line-height:34px; width:68px; background:#fff; border:1px solid #e0e0e0; border-bottom:none}
+.liucon{ border-left:1px solid #e0e0e0; border-right:1px solid #e0e0e0; width:608px;  clear:both;}
+.liudl{ width:575px; height:170px; padding-top:20px; padding-bottom:10px; margin:0 auto}
+.liudl dt{ width:200px; height:170px; float:left}
+.liudl dt a{ width:196px; height:166px; padding:1px; border:1px solid #e0e0e0; display:block}
+.liulink{ width:365px; height:170px; padding-left:10px; float:left}
+.liulink p{ height:25px; line-height:25px; background:url(../images/ico.gif) no-repeat left center; padding-left:15px;}
+.liulink p a{ color:#333;}
+.liulink p a:hover{ color:#fe0000;}
+.liulink p span{ float:right; color:#a57759; padding-right:10px}
+.liulink .gengduo{ background:none}
+.liulink .gengduo a{ width:52px; height:20px; display:block; background:url(../images/gengduo.gif) no-repeat; float:right}
+.liuul{ width:580px; height:220px; margin:0 auto; padding-top:20px}
+.liuul li{ width:90px; height:100px; margin:0 3px 10px; float:left}
+.liuul li a{ width:90px; height:60px; display:block;margin-bottom:10px;}
+.liuul li span{ height:15px; line-height:15px; color:#333; display:block; text-align:center}
+.liuul li em{ height:15px; line-height:15px; color:#999; display:block; text-align:center;}
+.geng{ clear:both; height:20px; padding-right:20px;}
+.geng a{ width:52px; height:20px; display:block; background:url(../images/gengduo.gif) no-repeat; float:right}
+.liubottom{ clear:both; height:10px; line-height:0px; font-size:0px; background:url(../images/liubottom.gif) no-repeat; margin-bottom:10px}
+.danright{ width:180px; margin-left:10px; float:left; }
+.texie{ clear:both}
+.tetop{ height:40px; line-height:40px; color:#333; font-size:14px; font-weight:bold; background:url(../images/tetop.gif) no-repeat}
+.tecon{border-left:1px solid #e0e0e0; border-right:1px solid #e0e0e0; width:178px; clear:both;}
+.tepic{ width:160px; height:160px; margin:0 auto; padding-top:10px}
+.teul{ width:160px; padding-top:10px; border-bottom:1px solid #e0e0e0; margin:0 auto}
+.teul li{ clear:both; height:40px; padding-bottom:8px}
+.teul li span{ width:30px; height:40px; float:left;}
+.teul li strong{ width:120px; height:40px; padding-left:10px; float:left; color:#335293}
+.teul li strong em{ color:#c6c6c6}
+.teface{ margin-left:5px; width:170px; padding-top:10px;}
+.tebottom{ clear:both; height:10px; line-height:0px; font-size:0px; background:url(../images/tebottom.gif) no-repeat; margin-bottom:10px}
+
+
+
+
+
+

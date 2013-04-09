@@ -3,7 +3,7 @@
 <div class="main clearfix">
      <?php 
 		//left
-		echo View::factory('changsuo/left', array('cat' => $catalog['id'], 'id' => $data['id']));
+		echo View::factory('changsuo/left', array('catalog' => $catalog, 'id' => $data['id']));
 	 ?>
      <div class="right">
           <ul class="menu">
@@ -15,7 +15,7 @@
           </ul>
          <div style="width:800px">
 			<div class="medio">
-             <div class="flow">
+             <div class="flow" style="height:600px;overflow-y:auto;">
 				<?php foreach ($data['contents'] as $v) { ?>
 					<dl class="flowdl clearfix">
                     <?php echo $v->content; ?>
